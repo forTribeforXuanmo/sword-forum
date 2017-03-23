@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sword.mapper.CommentMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		cid, ctid, cuid, ctime, content, rootcid, parentuid
+	</sql>
+	<!--查询根评论下非直接评论-->
+	<select id="selectNdirect" resultType="com.sword.model.Comment" parameterType="java.util.Map">
+		select * from comment where ctid=#{ctid} and rootcid=#{rootcid} and parentuid != 0;
+	</select>
+	<select id="unreadCount" parameterType="long" resultType="int">
+		SELECT COUNT(*) FROM COMMENT WHERE  ctid IN( SELECT tid FROM topic WHERE tuid=#{uid} ) AND isread=0
+	</select>
+	<select id="unreadComment" parameterType="long" resultMap="unreadComm">
+		SELECT cuid,unickname,headimg,ctid,ttopic,cid,content ,ctime FROM COMMENT ,topic,USER WHERE ctid IN( SELECT tid FROM topic WHERE tuid=#{uid} )AND isread=0 AND 		ctid=tid AND cuid=uid ORDER BY ctime DESC
+	</select>
+	<update id="updateRead" parameterType="long">
+		update comment set isread=1 where ctid=#{tid}
+	</update>
+	<resultMap id="unreadComm" type="com.sword.model.VO.UnreadComm">
+		<id property="cid" column="cid"/>
+		<result property="cuid" column="cuid"/>
+		<result property="unickname" column="unickname"/>
+		<result property="headimg" column="headimg"/>
+		<result property="ctid" column="ctid"/>
+		<result property="ttopic" column="ttopic"/>
+		<result property="content" column="content"/>
+		<result property="ctime" column="ctime"/>
+	</resultMap>
+</mapper>

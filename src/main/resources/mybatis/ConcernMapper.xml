@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sword.mapper.ConcernMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		conid, confromuid, contouid
+	</sql>
+	<select id="iConcernSearch" resultMap="convo">
+	SELECT
+  conid,
+  uid,
+  headimg,
+  uemail,
+  unickname,
+  usex,
+  ustatement,
+  ulevel
+FROM
+  USER,
+  concern
+WHERE uid IN
+  (SELECT
+    contouid
+  FROM
+    concern
+  WHERE confromuid = #{meuid})
+  <if test="search!=null and search!=''">
+  AND (
+    uid LIKE #{search}
+    OR uemail LIKE #{search}
+    OR unickname LIKE #{search}
+	  )
+  </if>
+  AND uid = contouid
+	</select>
+
+    <select id="concernTopic" parameterType="long" resultType="com.sword.model.Topic">
+        SELECT
+        *
+        FROM
+        topic
+        WHERE tuid IN
+        (SELECT
+        contouid
+        FROM
+        concern
+        WHERE confromuid = #{fromuid})
+        AND DATEDIFF(NOW(), ttime)&lt;=4 AND DATEDIFF(NOW(), ttime)&gt;=0 order by ttime desc
+    </select>
+
+    <select id="concernISearch" resultMap="convo">
+        SELECT
+        conid,
+        uid,
+        headimg,
+        uemail,
+        unickname,
+        usex,
+        ustatement,
+        ulevel
+        FROM
+        USER,
+        concern
+        WHERE uid IN
+        (SELECT
+        confromuid
+        FROM
+        concern
+        WHERE contouid = #{meuid})
+        <if test="search!=null and search!=''">
+            AND (
+            uid LIKE #{search}
+            OR uemail LIKE #{search}
+            OR unickname LIKE #{search}
+            )
+        </if>
+        AND uid = confromuid
+
+    </select>
+	<resultMap id="convo" type="com.sword.model.VO.ConVo">
+		<id property="conid" column="conid"/>
+		<result property="uid" column="uid"/>
+		<result property="headimg" column="headimg"/>
+		<result property="uemail" column="uemail"/>
+		<result property="unickname" column="unickname"/>
+		<result property="usex" column="usex"/>
+		<result property="ustatement" column="ustatement"/>
+		<result property="ulevel" column="ulevel" />
+	</resultMap>
+</mapper>

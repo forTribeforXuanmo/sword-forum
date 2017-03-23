@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> - 论坛</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="img/favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="row">
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="wrapper wrapper-content animated fadeInRight">
+
+                        <div class="ibox-content m-b-sm border-bottom">
+                            <div class="p-xs">
+                                <div class="pull-left m-r-md">
+                                    <i class="fa fa-globe text-navy mid-icon"></i>
+                                </div>
+                                <h2>欢迎来到仗剑论坛</h2>
+                                <span>你可以自由选择你感兴趣的话题。</span>
+                            </div>
+                        </div>
+
+                        <div class="ibox-content forum-container">
+
+                            <div class="forum-title">
+                                <div class="pull-right forum-desc">
+                                    <samll>在线人数:<span style="color: #91806b" id="online" >0</span></samll>&nbsp;
+                                    <samll id="topic_total" >总帖子数：<span style="color: #91806b" id="allclick"></span></samll>
+                                </div>
+                                <h3>主版</h3>
+                            </div>
+                        <!----------------------课堂问答--------------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-shield"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=1&&page=1" class="forum-item-title">课程问答</a>
+                                        <div class="forum-sub-title" id="ktwd_statement">课堂问答</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ktwd_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ktwd_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small >回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ktwd_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--java------------>
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=2&&page=1" class="forum-item-title">JAVA</a>
+                                        <div class="forum-sub-title" id="java_statement">JAVA</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="java_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="java_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small >回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="java_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!----------------c/c++-------------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=3&&page=1" class="forum-item-title">c/c++</a>
+                                        <div class="forum-sub-title" id="c_statement">c/c++</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="c_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="c_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="c_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-----------python------>
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=4&&page=1" class="forum-item-title">python</a>
+                                        <div class="forum-sub-title" id="python_statement">c/c++</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="python_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="python_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="python_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!----------情感部落------>
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=5&&page=1" class="forum-item-title">情感部落</a>
+                                        <div class="forum-sub-title" id="qgbl_statement">情感部落</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="qgbl_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="qgbl_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="qgbl_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-----------真情天下---------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=6&&page=1" class="forum-item-title">真情天下</a>
+                                        <div class="forum-sub-title" id="zqtx_statement">真情天下</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="zqtx_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="zqtx_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="zqtx_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!---------婆媳关系------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=7&&page=1" class="forum-item-title">婆媳关系</a>
+                                        <div class="forum-sub-title" id="pxgx_statement">婆媳关系</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="pxgx_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="pxgx_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="pxgx_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!---------仗剑杂谈------------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=8&&page=1" class="forum-item-title">仗剑杂谈</a>
+                                        <div class="forum-sub-title" id="zjzt_statement">仗剑杂谈</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="zjzt_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="zjzt_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="zjzt_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-------医疗曝光--------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=9&&page=1" class="forum-item-title">医疗曝光</a>
+                                        <div class="forum-sub-title" id="ylbg_statement">医疗曝光</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ylbg_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ylbg_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ylbg_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------------大话教育--------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=10&&page=1" class="forum-item-title">大话教育</a>
+                                        <div class="forum-sub-title" id="dhjy_statement">大话教育</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="dhjy_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="dhjy_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="dhjy_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!----------娱乐八卦---------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=11&&page=1" class="forum-item-title">娱乐八卦</a>
+                                        <div class="forum-sub-title" id="ylbagua_statement">娱乐八卦</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ylbagua_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ylbagua_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="ylbagua_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--------体育沙龙-------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=12&&page=1" class="forum-item-title">体育沙龙</a>
+                                        <div class="forum-sub-title" id="tysl_statement">体育沙龙</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="tysl_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="tysl_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="tysl_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------------星座论坛-------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=13&&page=1" class="forum-item-title">星座论坛</a>
+                                        <div class="forum-sub-title" id="xzlt_statement">星座论坛</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="xzlt_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="xzlt_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="xzlt_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------------保健养生----------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=14&&page=1" class="forum-item-title">保健养生</a>
+                                        <div class="forum-sub-title" id="bjys_statement">保健养生</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="bjys_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="bjys_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="bjys_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!------文化漫谈-------->
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=15&&page=1" class="forum-item-title">文化漫谈</a>
+                                        <div class="forum-sub-title" id="whmt_statement">文化漫谈</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="whmt_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="whmt_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="whmt_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!----------手机综艺------>
+                            <div class="forum-item active">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <div class="forum-icon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <a href="/show/topicCatalog?sid=16&&page=1" class="forum-item-title">手机综艺</a>
+                                        <div class="forum-sub-title" id="sjzy_statement">手机综艺</div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="sjzy_click">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>浏览</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="sjzy_reply_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>回帖</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 forum-info">
+                                        <span class="views-number" id="sjzy_topic_num">
+                                            0
+                                        </span>
+                                        <div>
+                                            <small>帖子</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+
+    <!-- Peity -->
+    <script src="/js/plugins/peity/jquery.peity.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="/js/content.js?v=1.0.0"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.ajax({
+                type:"POST",
+                url:"/show/catalog",
+                cache:false,
+                dataType:"json",
+                success:function(data){
+                    $("span[id$='_click']").each(function(index,element){
+                        $(element).html(data.a[index].sclickcount);
+                    });
+                    $("span[id$='reply_num']").each(function(index,element){
+                        $(element).html(data.b[index]);
+                    });
+                    $("span[id$='topic_num']").each(function(index,element){
+                       $(element).html(data.a[index].stopiccount);
+                    });
+                    $(".forum-sub-title[id$='_statement']").each(function (index,element) {
+                       $(element).html(data.a[index].sshortsm);
+                    });
+                    var allclick=0;
+                    for(var i=0;i<data.a.length;i++){
+                        allclick=allclick+data.a[i].stopiccount;
+                    }
+                    $('#allclick').html(allclick);
+                    $('#online').html(data.onlineCount);
+
+//                    $('#ktwd_click').html(data.a[5].sclickcount);
+//                    $('#ktwd_statement').html(data.ktwd_statement);
+//                    $('#ktwd_topic_num').html(data.ktwd_topic);
+
+                   console.log("欢迎来到仗剑论坛^-^");
+                },
+                err:function (XMLHttpRequest,textStatus,errThrown) {
+                    alert("ajax请求失败");
+                }
+
+
+            })
+        })
+    </script>
+
+    
+    
+
+</body>
+
+</html>

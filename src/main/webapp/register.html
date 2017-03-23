@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> - 注册</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <script>
+    if (window.top !== window.self) {
+        window.top.location = window.location;
+    }</script>
+    <style type="text/css">
+        .tips {
+            font-size: 16px;
+            color: palevioletred;
+        }
+    </style>
+</head>
+
+<body class="gray-bg" style="background:url('/img/login2.jpg')  no-repeat center fixed">
+
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+    <div>
+        <a href="index.jsp">
+            <h2 class="logo-name">Z+</h2>
+        </a>
+        <h3>欢迎注册 仗剑论坛</h3>
+        <p>创建一个Z+新账户</p>
+        <form class="m-t " role="form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="email" placeholder="请输入你的邮箱" autofocus/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="nickname" placeholder="请设置你的昵称"/>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="请输入密码"/>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="again" placeholder="请再次输入密码"/>
+            </div>
+            <button type="button" onclick="submitf2();" class="btn btn-primary block full-width m-b">注 册</button>
+
+            <p class="text-muted text-center">
+                <small>已经有账户了？</small>
+                <a href="/login.html">点此登录</a>
+            </p>
+        </form>
+    </div>
+</div>
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="/js/plugins/layer/layer.min.js"></script>
+<script type="text/javascript">
+
+//    $(document).ready(function () {
+//        $('.i-checks').iCheck({
+//            checkboxClass: 'icheckbox_square-green',
+//            radioClass: 'iradio_square-green',
+//        });
+//
+//    });
+
+    function check() {
+        var email = $('#email').val().trim();
+        var nickname = $('#nickname').val().trim();
+        var password = $('#password').val().trim();
+        var again = $('#again').val().trim();
+        var rpassword = /^[\w]{6,12}$/;
+        var remail = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+        if (email == null || email == '') {
+            layer.tips("不能为空", $('#email'));
+            return false;
+        } else if (nickname == null || nickname == '') {
+            layer.tips("不能为空", $('#nickname'));
+            return false;
+        } else if (password == null || password == '') {
+            layer.tips("不能为空", $('#password'));
+            return false;
+        } else if (again == null || again == '') {
+            layer.tips("不能为空", $('#again'));
+            return false;
+        } else if (!remail.test(email)) {
+            layer.tips("邮箱格式错误", $('#email'));
+            return false;
+        } else if (!rpassword.test(password)) {
+            layer.tips("6-12位字母、数字、下划线", $('#password'));
+            return false;
+        } else if (password != again) {
+            layer.tips("两次密码输入不同", $('#again'));
+            return false;
+        } else {
+            return true;
+        }
+    }
+    function submitf2() {
+        var email =$('#email').val().trim();
+        var nickname = $('#nickname').val().trim();
+        var password = $('#password').val().trim();
+        alert(email + ":" + nickname + ":" + password);
+        if (check()) {
+            alert(email);
+            $.ajax({
+                type: 'post',
+                url: "/checkRegister",
+                dataType: "text",
+                data: {uemail: email, unickname: nickname, upassword: password},
+                success: function (data) {
+                    if (data == "success") {
+                        layer.msg("注册成功");
+                        setTimeout(function () {
+                            location.href = "/login.html";
+                        }, 1000);
+                    } else if (data == "busy") {
+                        layer.msg("服务器繁忙");
+                    } else if (data == "has") {
+                        layer.tips("此邮箱已被注册！", $("#email"));
+                    } else {
+                        layer.msg("请不要修改客户端！");
+                    }
+
+                }
+            });
+        }
+    }
+</script>
+
+
+</body>
+
+</html>
