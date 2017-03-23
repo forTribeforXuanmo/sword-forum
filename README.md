@@ -15,9 +15,10 @@
 **后端**  
 - IOC容器Spring
 - Web容器SpringMVC
-- Orm框架MyBatis(使用==青苗大神==的[mybatisplus](http://mp.baomidou.com/#/))
+- Orm框架MyBatis(使用`青苗`大神的[MyBatisPlus](http://mp.baomidou.com/#/))
 - 视图模板Jsp/Jstl
 - 其他 Jsoup,fastjson等
+
 **前端**  
 - JQuery js框架
 - Bootstrap 响应式框架
