@@ -187,8 +187,8 @@
                                 <img alt="image" src="/img/${sessionScope.user.headimg}"/>
                             </a>
                             <div class="media-body">
-                                <textarea class="form-control rootcontent"  placeholder="填写评论..."></textarea>
-                                <button type="button" class="btn btn-primary "  style="float: right;margin-top: 5px" onclick="submitroot()">发表评论</button>
+                                <textarea class="form-control rootcontent"   placeholder="填写评论..."></textarea>
+                                <p><span class="emotion">表情</span><button type="button" class="btn btn-primary "  style="float: right;margin-top: 5px" onclick="submitroot()">发表评论</button></p>
                             </div>
                         </div>
                         </c:if>
@@ -210,7 +210,7 @@
 <script src="/js/jquery.min.js?v=2.1.4"></script>
 <script src="/js/bootstrap.min.js?v=3.3.6"></script>
 <script src="/js/plugins/layer/layer.min.js"></script>
-
+<script type="text/javascript" src="/js/plugins/qqface/jquery.qqFace.js"></script>
 <!-- 自定义js -->
 <script src="/js/content.js?v=1.0.0"></script>
 <script type="text/javascript">
@@ -227,6 +227,8 @@
             }
         }
     })
+
+
     /*点赞事件*/
    function addtopicclick(obj){
     var topicclick=$(obj).children("span").text();

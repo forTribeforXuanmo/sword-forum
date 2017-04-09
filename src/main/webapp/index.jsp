@@ -204,9 +204,9 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a href="profile.html">
+                                    <a>
                                         <div>
-                                            <i class="fa fa-qq fa-fw"></i> 3条新回复
+                                            <i class="fa fa-qq fa-fw"></i> 3条私信（待实现）
                                             <span class="pull-right text-muted small">12分钟钱</span>
                                         </div>
                                     </a>
@@ -214,7 +214,7 @@
                                 <li class="divider"></li>
                                 <li>
                                     <div class="text-center link-block" >
-                                        <a class="J_menuItem" href="notifications.html">
+                                        <a class="J_menuItem" >
                                             <strong>查看所有 </strong>
                                             <i class="fa fa-angle-right"></i>
                                         </a>

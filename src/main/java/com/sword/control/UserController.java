@@ -57,6 +57,7 @@ public class UserController {
         if(userList!=null&& userList.size()!=0){
             User user=userList.get(0);
             request.getSession().setAttribute("user",user);
+            System.out.println("登录成功："+user.getUnickname());
             try {
                 response.getWriter().write("success");
                 response.getWriter().flush();
@@ -407,7 +408,6 @@ public class UserController {
         map.put("pages",page.getPages());
         map.put("condition",condition);
         map.put("needtime",needtime);
-        System.out.println(page);
         return "mytopic";
     }
     //删除帖子

@@ -53,7 +53,7 @@ public class ShowController {
         }
         map.put("a",sectionList);
         map.put("b",replycountList);
-        map.put("onlineCount", SystemWebSocketHandler.getUsers().size());
+        map.put("onlineCount", OnlineListener.getCountNumber()-3);
         return map;
     }
     @RequestMapping("/topicCatalog")

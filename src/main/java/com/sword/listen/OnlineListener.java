@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSessionListener;
 
 /**
  * Created by asus on 2017/3/22.
+ * 项目启动容器会自己生成session,这里有三个一开始就生成.
  */
 public class OnlineListener implements HttpSessionListener {
     private static long countNumber=0;
@@ -14,11 +15,10 @@ public class OnlineListener implements HttpSessionListener {
 
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
                 countNumber++;
-        System.out.println("来了一个。。。。"+countNumber);
     }
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
                 countNumber--;
-        System.out.println("退出一个.。。。。"+countNumber);
+
     }
 
 }

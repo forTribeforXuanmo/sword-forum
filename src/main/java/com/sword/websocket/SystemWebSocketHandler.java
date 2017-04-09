@@ -30,7 +30,6 @@ public class SystemWebSocketHandler implements WebSocketHandler {
     @Resource
     private CommentMapper commentMapper;
     public void afterConnectionEstablished(WebSocketSession webSocketSession) throws Exception {
-
         users.add(webSocketSession);
         long uid=(Long)webSocketSession.getAttributes().get("socketuid");
         if(uid!=0){
@@ -51,6 +50,10 @@ public class SystemWebSocketHandler implements WebSocketHandler {
     }
 
     public void afterConnectionClosed(WebSocketSession webSocketSession, CloseStatus closeStatus) throws Exception {
+        if(webSocketSession.isOpen()){
+            webSocketSession.close();
+        }
+        users.remove(webSocketSession);
     }
 
     public boolean supportsPartialMessages() {

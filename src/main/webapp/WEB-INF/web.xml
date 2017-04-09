@@ -50,6 +50,9 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>com.sword.listen.OnlineListener</listener-class>
+  </listener>
   <!--过滤器-->
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
