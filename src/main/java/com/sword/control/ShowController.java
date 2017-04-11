@@ -2,6 +2,7 @@ package com.sword.control;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.sword.listen.Online;
 import com.sword.listen.OnlineListener;
 import com.sword.mapper.*;
 import com.sword.model.Section;
@@ -53,7 +54,7 @@ public class ShowController {
         }
         map.put("a",sectionList);
         map.put("b",replycountList);
-        map.put("onlineCount", OnlineListener.getCountNumber()-3);
+        map.put("onlineCount", Online.getCount());
         return map;
     }
     @RequestMapping("/topicCatalog")

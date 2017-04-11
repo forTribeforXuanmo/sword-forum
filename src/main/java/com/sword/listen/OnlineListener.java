@@ -1,4 +1,8 @@
 package com.sword.listen;
+import javafx.application.Application;
+
+import javax.mail.Session;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
@@ -7,18 +11,17 @@ import javax.servlet.http.HttpSessionListener;
  * 项目启动容器会自己生成session,这里有三个一开始就生成.
  */
 public class OnlineListener implements HttpSessionListener {
-    private static long countNumber=0;
-
-    public static long getCountNumber() {
-        return countNumber;
-    }
 
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-                countNumber++;
+
     }
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-                countNumber--;
-
+        HttpSession session=httpSessionEvent.getSession();
+        if(session.getAttribute("user")!=null){
+            Online.delete();
+            System.out.println("user在线退出减一===");
+        }
+        System.out.println("session销毁==减1==");
     }
 
 }

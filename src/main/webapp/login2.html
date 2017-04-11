@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title> - 登录后台</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="后台登录">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script>
+        if (window.top !== window.self) {
+            window.top.location = window.location;
+        }
+    </script>
+
+</head>
+
+<body class="signin">
+    <div class="signinpanel">
+        <div class="row">
+            <div class="col-sm-12">
+                <form method="post" action="/man/loginback" onsubmit="return checknull()" >
+                    <h4 class="no-margins">登录：</h4>
+                    <p class="m-t-md">登录到Z+后台</p>
+                    <input type="text" class="form-control uname" placeholder="用户名" id="username" name="username" />
+                    <input type="password" class="form-control pword m-b" placeholder="密码" id="password" name="password" />
+                    <a href="">忘记密码了？</a>
+                    <button class="btn btn-success btn-block" type="submit"  >登录</button>
+                </form>
+            </div>
+        </div>
+        <div class="signup-footer">
+            <div class="pull-left">
+                &copy; zAdmin
+            </div>
+        </div>
+    </div>
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <!--layer插件-->
+    <script src="/js/plugins/layer/layer.min.js"></script>
+    <script type="text/javascript">
+       $(function () {
+           function getUrlParam(name)
+           {
+               var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+               var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+               if (r!=null) return unescape(r[2]); return null; //返回参数值
+           }
+           var info=getUrlParam("logininfo");
+           if(info=='err'){
+               layer.tips("账号或密码错误", $('form'), {tips: [1, '#0FA6D8']});
+           }
+
+       });
+       function checknull() {
+           if($.trim($('#username').val())==''||$.trim($('#password').val())==''){
+               layer.tips("账号或密码不允许为空",$('form'));
+               return false;
+           }else {
+               return true;
+           }
+       }
+</script>
+
+
+</body>
+
+</html>

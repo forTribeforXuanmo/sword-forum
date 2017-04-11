@@ -3,6 +3,7 @@ package com.sword.control;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
+import com.sword.listen.Online;
 import com.sword.mapper.ConcernMapper;
 import com.sword.mapper.TopicMapper;
 import com.sword.mapper.UserMapper;
@@ -57,6 +58,7 @@ public class UserController {
         if(userList!=null&& userList.size()!=0){
             User user=userList.get(0);
             request.getSession().setAttribute("user",user);
+            Online.add();
             System.out.println("登录成功："+user.getUnickname());
             try {
                 response.getWriter().write("success");
@@ -76,7 +78,7 @@ public class UserController {
     }
     @RequestMapping("/login")
     public String login(HttpServletRequest request){
-        User user= (User)request.getSession().getAttribute("user");
+        User user= (User)request.getSession(true).getAttribute("user");
         if(user.getUid()!=null && user.getUid().equals("")){
             return "redirect:/index.jsp";
         }else {
@@ -143,9 +145,11 @@ public class UserController {
 
     @RequestMapping("/showUser/{uid}")      //展示他人用户基本信息和帖子
     public String showUser(@PathVariable long uid,HttpServletRequest request){
-
         User user=userMapper.selectById(uid);
         User me= (User) request.getSession().getAttribute("user");
+        if(me==null){
+            return "redirect:/login.html";
+        }
         if(uid==me.getUid()){
             return "redirect:/showmyplace";
         }
@@ -439,6 +443,7 @@ public class UserController {
     @RequestMapping("/leave")
     public String leave(HttpServletRequest request){
         request.getSession(false).invalidate();
+        System.out.println("退出session失效");
         return "redirect:login.html";
     }
 
