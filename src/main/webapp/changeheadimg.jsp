@@ -17,7 +17,6 @@
     <link href="css/plugins/cropper/cropper.min.css" rel="stylesheet">
 </head>
 <body bgcolor="#ebf6e9" style="height: 500px">
-
 <div class="ibox-content">
     <div class="wrapper wrapper-content">
     <div class="row">

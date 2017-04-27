@@ -68,15 +68,19 @@
             success: function (data) {
                 if (data == "err") {
                     layer.tips("账号或密码错误", $('form'), {tips: [1, '#0FA6D8']}); //还可配置颜色
-                } else {
+                } else if (data == 'success') {
                     var index = layer.load(1, {
                         shade: [0.1, '#fff'] //0.1透明度的白色背景
                     });
                     $('#submit').isDisabled;
                     setTimeout(function () {
-                      top.location.href = '/index.jsp';
+                        top.location.href = '/login';
                     }, 2000);
 
+                } else if (data == '-1') {
+                    layer.tips("您的账号已永久被封", $('form'), {tips: [2, '#0FA6D8']});
+                } else {
+                    layer.tips("您的账号还有" + data + "天解封", $('form'), {tips: [2, '#0FA6D8']});
                 }
             }
 

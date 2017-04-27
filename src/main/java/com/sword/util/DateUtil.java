@@ -45,7 +45,6 @@ public class DateUtil {
     }
     public static String toDay_Format(final Date createDate){
         String data=DateFormatUtils.format(createDate,"yyyyMMddHHmmss");
-        System.out.println(data);
         return data;
     }
     public static Date toDate_Formate(String date){

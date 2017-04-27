@@ -6,7 +6,7 @@ package com.sword.listen;
 public class Online {
     private Online(){
     }
-    private static long count=0;
+    private static volatile long count=0;
     public static long getCount() {
         return count;
     }

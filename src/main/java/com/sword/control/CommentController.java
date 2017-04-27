@@ -3,9 +3,11 @@ package com.sword.control;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.sword.mapper.CommentMapper;
+import com.sword.mapper.SectionMapper;
 import com.sword.mapper.TopicMapper;
 import com.sword.mapper.UserMapper;
 import com.sword.model.Comment;
+import com.sword.model.Section;
 import com.sword.model.Topic;
 import com.sword.model.User;
 import com.sword.model.VO.CommentVo;
@@ -46,12 +48,15 @@ public class CommentController {
     UserMapper userMapper;
     @Resource
     TopicMapper topicMapper;
+    @Resource
+    SectionMapper sectionMapper;
     /*展示对应的帖子内容，帖子和评论*/
     @RequestMapping(value="/showTopicDetail/{tid}")
      public String showComment(@PathVariable("tid") long tid, Map<String,Object>map,HttpServletRequest request){
         //获取楼主的信息 直接使用TopicCataLogVo,只需把html过滤去掉,时间采用中国日期格式
         Topic maintopic=topicMapper.selectById(tid);
         User  topicuser=userMapper.selectById(maintopic.getTuid());
+        Section section=sectionMapper.selectById(maintopic.getTsid());
         User me=null;
         me= (User) request.getSession().getAttribute("user");
         if(me!=null&&me.getUid()==topicuser.getUid()){
@@ -94,6 +99,8 @@ public class CommentController {
             oneCommentvs.setRoot_Ndirectcomment(root_Ndirectcomment);
             commentvoslist.add(oneCommentvs);
         }
+        map.put("sectionid",section.getSid());
+        map.put("sectionname",section.getSname());
         map.put("comment",commentvoslist);
         map.put("topic",topicCatalogVo);
         /*增加帖子的点击数*/
@@ -119,7 +126,6 @@ public class CommentController {
         if(parentuid!=0){
             User parent=userMapper.selectById(parentuid);
             cvo.setParentunickname(parent.getUnickname());
-            System.out.println(parent.getUnickname());
         }
         return cvo;
 

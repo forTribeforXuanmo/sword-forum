@@ -25,7 +25,7 @@ public class Shengcheng {
         cg.setIdType(IdType.AUTO);
 
 
-        cg.setSaveDir("C:\\Users\\Public\\Desktop\\sword1");
+        cg.setSaveDir("C:\\sword1");
         AutoGenerator.run(cg);
     }
     @Test

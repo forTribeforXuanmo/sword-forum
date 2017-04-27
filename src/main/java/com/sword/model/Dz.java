@@ -25,8 +25,8 @@ public class Dz implements Serializable {
 	/** 点赞人uid */
 	private Long dzformuid;
 
-	/** 被点赞帖子 */
-	private Long dztotid;
+	/** 被点赞帖子id */
+	private Long dztopicid;
 
 	/** 点赞时间 */
 	private Date dztime;
@@ -48,12 +48,12 @@ public class Dz implements Serializable {
 		this.dzformuid = dzformuid;
 	}
 
-	public Long getDztotid() {
-		return this.dztotid;
+	public Long getDztopicid() {
+		return dztopicid;
 	}
 
-	public void setDztotid(Long dztotid) {
-		this.dztotid = dztotid;
+	public void setDztopicid(Long dztopicid) {
+		this.dztopicid = dztopicid;
 	}
 
 	public Date getDztime() {

@@ -288,7 +288,7 @@ body.body-small .navbar-top-links li:last-child {
 }
 
 .nav-second-level li,
-.nav-third-level li {
+.nav-third-level li{
     border-bottom: none !important;
 }
 
@@ -297,7 +297,7 @@ body.body-small .navbar-top-links li:last-child {
     padding-left: 52px;
 }
 
-.nav-third-level li a {
+.nav-third-level li a{
     padding-left: 62px;
 }
 

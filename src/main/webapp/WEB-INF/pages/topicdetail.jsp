@@ -25,7 +25,21 @@
 
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css?v=4.1.0" rel="stylesheet">
-
+    <style type="text/css">
+        .loadnav{
+            color: #5fd3d4;
+            font-size: 18px;
+            font-family: 华文彩云;
+        }
+        .loadnav:hover{
+            color: #00a2d4;
+        }
+        .topichead{
+            font-size: 14px;
+            color: #898986;
+            font-weight: 300;
+        }
+    </style>
 </head>
 
 <body class="gray-bg">
@@ -34,10 +48,12 @@
         <div class="col-sm-9 col-md-9 col-md-offset-1 " style="padding-left: 0px">
             <%--标题--%>
             <div class="ibox ">
-                <div class="ibox-content text-center">
-                    <h3 class="m-b-xxs">
-                        ${topic.tTopic}
-                    </h3>
+                <div class="ibox-content text-left">
+                    <div class="m-b-xxs">
+                            <a href="/forum_main.html"  class="loadnav"  >home</a>&nbsp;/
+                           <a href="/show/topicCatalog?sid=${sectionid} &&page=1" class="loadnav"> ${sectionname}</a>&nbsp;/
+                        <span class="topichead">${topic.tTopic}</span>
+                    </div>
                 </div>
             </div>
             <%--标题结束--%>

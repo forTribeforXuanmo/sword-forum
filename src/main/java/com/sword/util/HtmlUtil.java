@@ -31,7 +31,7 @@ public class HtmlUtil {
         }else{
            text=text+"<p>&nbsp;</p>";
         }
-            System.out.println(text);
+
         return text;
         }
     }
@@ -65,7 +65,6 @@ public class HtmlUtil {
 
         if (message == null)
             return (null);
-
         char content[] = new char[message.length()];
         message.getChars(0, message.length(), content, 0);
         StringBuffer result = new StringBuffer(content.length + 50);

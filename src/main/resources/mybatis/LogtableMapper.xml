@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sword.mapper.LogtableMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		lid, `uid`, ip, `time`, `type`
+	</sql>
+	<select id="todayLoginCount"  resultType="int">
+		select count(*) from logtable where DATEDIFF(#{date},time)=0 and uid=#{uid} and type=1
+	</select>
+	<select id="todayTopicCount" resultType="int">
+		select count(*) from logtable where DATEDIFF(#{date},time)=0 and uid=#{uid} and type=4
+	</select>
+</mapper>

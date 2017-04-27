@@ -6,5 +6,27 @@
 	<sql id="Base_Column_List">
 		mid, mname, mpassword, msex, mrole, memail
 	</sql>
+	<select id="getTopicChartByWeek" parameterType="java.lang.String" resultMap="chartvo">
+		SELECT DATE_FORMAT(ttime,'%Y年%v周')AS xstr,COUNT(*) AS ynum FROM topic WHERE DATE_FORMAT(ttime,'%Y')=#{YEAR} GROUP BY xstr
+	</select>
+	<select id="getTopicChartByMonth" parameterType="java.lang.String" resultMap="chartvo">
+				SELECT DATE_FORMAT(ttime,'%Y年%m月')AS xstr,COUNT(*) AS ynum FROM topic WHERE DATE_FORMAT(ttime,'%Y')=#{YEAR} GROUP BY xstr
 
+	</select>
+	<select id="getCommentChartByWeek" parameterType="java.lang.String" resultMap="chartvo">
+		SELECT DATE_FORMAT(ctime,'%Y年%v周')AS xstr,COUNT(*) AS ynum FROM comment WHERE DATE_FORMAT(ctime,'%Y')=#{YEAR} GROUP BY xstr
+	</select>
+	<select id="getCommentChartByMonth" parameterType="java.lang.String" resultMap="chartvo">
+		SELECT DATE_FORMAT(ctime,'%Y年%m月')AS xstr,COUNT(*) AS ynum FROM comment WHERE DATE_FORMAT(ctime,'%Y')=#{YEAR} GROUP BY xstr
+	</select>
+	<select id="getRegisterChartByWeek" parameterType="java.lang.String" resultMap="chartvo">
+				SELECT DATE_FORMAT(uregtime,'%Y年%v周')AS xstr,COUNT(*) AS ynum FROM user WHERE DATE_FORMAT(uregtime,'%Y')=#{YEAR} GROUP BY xstr
+	</select>
+	<select id="getRegisterChartByMonth" parameterType="java.lang.String" resultMap="chartvo">
+				SELECT DATE_FORMAT(uregtime,'%Y年%m月')AS xstr,COUNT(*) AS ynum FROM user WHERE DATE_FORMAT(uregtime,'%Y')=#{YEAR} GROUP BY xstr
+	</select>
+	<resultMap id="chartvo" type="com.sword.model.VO.ChartVo">
+		<result property="xstr" column="xstr"></result>
+		<result property="ynum" column="ynum"></result>
+	</resultMap>
 </mapper>

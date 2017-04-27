@@ -130,12 +130,20 @@
                         <li>
                             <a class="J_menuItem" >生活<span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
-                                <li><a href="/show/topicCatalog?sid=14&&page=1" class="J_menuItem">保健养生</a></li>
+                                <li>
+                                    <a class="J_menuItem" href="/show/topicCatalog?sid=14&&page=1">保健养生</a>
+                                    <%--<ul class="nav" style="padding-left:20px">--%>
+                                        <%--<li ><a class="J_menuItem" >aaaa</a></li>--%>
+                                        <%--<li><a class="J_menuItem">bbbbb</a></li>--%>
+                                        <%--<li><a class="J_menuItem">ccccccc</a></li>--%>
+                                    <%--</ul>--%>
+                                </li>
                                 <li><a href="/show/topicCatalog?sid=15&&page=1" class="J_menuItem">文化漫谈</a></li>
                                 <li><a href="/show/topicCatalog?sid=16&&page=1" class="J_menuItem">手机综合</a></li>
                             </ul>
                         </li>
                         <!--生活结束-->
+
                     </ul>
                 </li>
                 <!--版块类别结束-->
@@ -294,6 +302,18 @@
     };
     websocket.onclose = function (evnt) {
     }
+    function isLoginFirst() {
+        var loginFirstFlag='${sessionScope.loginfirst}';
+        if(loginFirstFlag=='yes'){
+            layer.msg("今日首次登录积分+10 ^_^");
+            $.ajax({
+                url:'/firstLoginSession',
+                type:'get',
+            })
+        }
+    }
+    isLoginFirst();
+
 </script>
 </body>
 
