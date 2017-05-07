@@ -71,6 +71,13 @@
                         <span class="label label-warning pull-right"></span>
                     </a>
                 </li>
+
+                <li>
+                    <a class="J_menuItem" href="/mtomansections">
+                        <i class="fa fa-newspaper-o"></i> <span class="nav-label">板块管理 </span>
+                        <span class="label label-warning pull-right"></span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>

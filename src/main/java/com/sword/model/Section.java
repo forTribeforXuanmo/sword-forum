@@ -25,7 +25,7 @@ public class Section implements Serializable {
 	private String sname;
 
 	/** 版主ID对应于use表的用户ID */
-	private Integer smasterid;
+	private Long smasterid;
 
 	/** 版块的说明 */
 	private String sstatement;
@@ -66,11 +66,11 @@ public class Section implements Serializable {
 		this.sname = sname;
 	}
 
-	public Integer getSmasterid() {
+	public Long getSmasterid() {
 		return this.smasterid;
 	}
 
-	public void setSmasterid(Integer smasterid) {
+	public void setSmasterid(Long  smasterid) {
 		this.smasterid = smasterid;
 	}
 

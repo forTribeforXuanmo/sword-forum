@@ -8,6 +8,7 @@ import com.sword.mapper.SectionMapper;
 import com.sword.mapper.TopicMapper;
 import com.sword.mapper.UserMapper;
 import com.sword.model.Manage;
+import com.sword.model.Section;
 import com.sword.model.User;
 import com.sword.model.VO.ChartVo;
 import com.sword.util.DateUtil;
@@ -259,6 +260,49 @@ public class ManageController {
         } else {
             pw.write("err");
             pw.close();
+        }
+    }
+    /**板块管理**/
+    @RequestMapping("/mtomansections")
+    public String toManSections(){
+        return "mansections";
+    }
+    @RequestMapping("/manlistsections")
+    @ResponseBody
+    public List manListSections(){
+        List<Section> sectionList=sectionMapper.selectList(new EntityWrapper<>(new Section()));
+        return  sectionList;
+    }
+    @RequestMapping("/mtoeditsection")
+    public String mToEditSection(@RequestParam("sid") int sid,Map<String,Object>map){
+        Section section=sectionMapper.selectById(sid);
+        map.put("selectSection",section);
+        return "editsection";
+    }
+    @RequestMapping("meditupdatesection")
+    public void mEditUpdateSection(@RequestParam("sid")int sid,@RequestParam("sname")String sname,
+                                   @RequestParam("sstatement")String sstatement,@RequestParam("sshortsm")String sshortsm,
+                                   @RequestParam("smasterid")long smasterid,HttpServletResponse response) throws IOException {
+        Section section=sectionMapper.selectById(sid);
+        PrintWriter pw=response.getWriter();
+        if(section==null){
+            pw.write("nosection");
+        }else {
+            if(sname.trim()==""||sstatement.trim()==""||sshortsm.trim()==""){
+                pw.write("hasnull");
+            }else{
+                User user=userMapper.selectById(smasterid);
+                if(user==null){
+                    pw.write("smsternotexist");
+                }else {
+                    section.setSname(sname);
+                    section.setSstatement(sstatement);
+                    section.setSshortsm(sshortsm);
+                    section.setSmasterid(smasterid);
+                    sectionMapper.updateSelectiveById(section);
+                    pw.write("success");
+                }
+            }
         }
     }
 }
