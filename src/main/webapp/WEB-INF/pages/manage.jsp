@@ -78,6 +78,18 @@
                         <span class="label label-warning pull-right"></span>
                     </a>
                 </li>
+                <li>
+                    <a href="/mtomantopics?sid=-1" class="J_menuItem">
+                        <i class="fa fa-list-alt"></i><span class="nav-label">帖子管理</span>
+                        <span class="label label-warning pull-right"></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/mtomancomments" class="J_menuItem">
+                        <i class="fa fa-comment"></i><span class="nav-label">评论管理</span>
+                        <span class="label label-warning pull-right"></span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -97,10 +109,10 @@
                     <!--头像-->
                     <c:if test="${sessionScope.admin!=null}">
                         <li >
-                            <a href="/man/leave"><i class="glyphicon glyphicon-log-out"></i>注销</a>
+                            <a href="/man/leave"><i class="glyphicon glyphicon-log-out"></i>注销 待</a>
                         </li>
                         <li class="dropdown">
-                            <a class="dropdown-toggle J_menuItem count-info" data-toggle="dropdown" href="/man/showmyplace">
+                            <a class="dropdown-toggle J_menuItem count-info" data-toggle="dropdown" >
                                ${sessionScope.admin.mname}
                             </a>
                         </li>
@@ -109,18 +121,12 @@
                                 <i class="fa fa-bell" id="bell"></i> <span class="label label-primary"  id="allunread"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
-                                <li>
-                                    <a href="/man/unReadComment?page=1" class="J_menuItem">
-                                        <div >
-                                            <i class="fa fa-envelope fa-fw"></i> 您有<font id="unreadComment">0</font>条未读评论
-                                        </div>
-                                    </a>
-                                </li>
+
                                 <li class="divider"></li>
                                 <li>
                                     <a>
                                         <div>
-                                            <i class="fa fa-qq fa-fw"></i> 3条私信（待实现）
+                                            <i class="fa fa-qq fa-fw"></i> 反馈信息 待
                                             <span class="pull-right text-muted small">12分钟钱</span>
                                         </div>
                                     </a>
@@ -129,7 +135,7 @@
                                 <li>
                                     <div class="text-center link-block" >
                                         <a class="J_menuItem" >
-                                            <strong>查看所有 </strong>
+                                            <strong>查看所有待 </strong>
                                             <i class="fa fa-angle-right"></i>
                                         </a>
                                     </div>

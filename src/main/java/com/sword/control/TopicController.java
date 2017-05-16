@@ -62,7 +62,7 @@ public class TopicController {
     }
     if(i==1){
         /**插入发表帖子记录**/
-        Logtable logtable=new Logtable(u.getUid(),new IpUtil().getIp(request),4);
+        Logtable logtable=new Logtable(u.getUid(),new IpUtil().getIp(request),5);
         logtableMapper.insert(logtable);
         /** 发表一个加8分最多一天加80分 就是发布帖子超过10个就不会在加了**/
         int count=logtableMapper.todayTopicCount(u.getUid(),new Date());

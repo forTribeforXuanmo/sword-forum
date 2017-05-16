@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.sword.mapper.ConcernMapper;
 import com.sword.mapper.UserMapper;
 import com.sword.model.Concern;
+import com.sword.model.Section;
 import com.sword.model.User;
 import com.sword.model.VO.ConVo;
 import com.sword.util.toVoUtil;
@@ -18,10 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -115,7 +113,20 @@ public class ConcernController {
             }
         }
     }
+    @RequestMapping("/deleteConcernBatch")
+    public void deleteConcernBatch(@RequestParam("conids[]")Long[] conids,HttpServletRequest request,HttpServletResponse response) throws IOException {
+        System.out.println(conids[0]+" "+conids[1]);
+        List conidList= Arrays.asList(conids);
+        int i=concernMapper.deleteBatchIds(conidList);
+        PrintWriter pw=response.getWriter();
+        if(i==conidList.size()){
+            pw.write("ok");
+        }else {
+            pw.write("err");
+        }
+        pw.close();
 
+    }
 
     @RequestMapping("/addConcern")
     public void addConcern(@RequestParam("hisuid")long hisuid,HttpServletResponse response,HttpServletRequest request){

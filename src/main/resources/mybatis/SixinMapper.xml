@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sword.mapper.SixinMapper">
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		siid, sifromuid, sitouid, content, `time`, isread
+	</sql>
+	<select id="unReadSixinCount" resultMap="groupbyuid" parameterType="long">
+		select sifromuid,count(*) as count from sixin where sitouid=#{uid} and isread=0 GROUP by sifromuid
+	</select>
+
+	<select id="selectLimitSixin" resultType="com.sword.model.Sixin">
+		SELECT * FROM sixin WHERE (sifromuid=#{hisuid} AND sitouid=#{meuid}) OR (sifromuid=#{meuid} AND sitouid=#{hisuid})  ORDER BY TIME  LIMIT 0,#{n};
+	</select>
+	<update id="updateHaveRead" >
+		UPDATE sixin SET isread=1 WHERE sifromuid=#{hisuid} AND sitouid=#{meuid} AND isread=0
+	</update>
+
+
+
+	<resultMap id="groupbyuid" type="com.sword.model.VO.GroupByIdVo">
+		<id column="sifromuid" property="uid"/>
+		<result column="count" property="count"/>
+	</resultMap>
+
+</mapper>

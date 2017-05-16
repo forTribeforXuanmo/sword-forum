@@ -12,19 +12,29 @@ import java.util.Map;
 
 /**
  * Created by asus on 2017/3/21.
+ * 存放的是'socketuid'用户id
  */
 public class WebSocketHandshakeInterceptor implements HandshakeInterceptor {
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
-        if(request instanceof ServletServerHttpRequest){
-            ServletServerHttpRequest serverRequest= (ServletServerHttpRequest) request;
-            HttpSession session=serverRequest.getServletRequest().getSession(false);
-            if(session!=null){
-                User user=(User)session.getAttribute("user");
-                if(user!=null)
-                map.put("socketuid",user.getUid());
+        if (request instanceof ServletServerHttpRequest) {
+            ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
+            HttpSession session = serverRequest.getServletRequest().getSession(false);
+            if (session != null) {
+                User user = (User) session.getAttribute("user");
+                if (user != null) {
+                    if (map.get("socketuid") == null) {
+                        map.put("socketuid", user.getUid());
+                        return true;
+                    } else {
+                        return true;
+                    }
+                }
+            } else {
+                return false;
             }
         }
-        return true;
+        return false;
+
     }
 
     public void afterHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse, WebSocketHandler webSocketHandler, Exception e) {

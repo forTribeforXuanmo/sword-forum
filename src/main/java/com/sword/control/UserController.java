@@ -3,21 +3,13 @@ package com.sword.control;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.sword.listen.Online;
-import com.sword.mapper.ConcernMapper;
-import com.sword.mapper.LogtableMapper;
-import com.sword.mapper.TopicMapper;
-import com.sword.mapper.UserMapper;
-import com.sword.model.Concern;
-import com.sword.model.Logtable;
-import com.sword.model.Topic;
-import com.sword.model.User;
+import com.sword.mapper.*;
+import com.sword.model.*;
+import com.sword.model.VO.CommentVo;
 import com.sword.model.VO.TopicCatalogVo;
 import com.sword.util.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +36,14 @@ public class UserController {
     private ConcernMapper concernMapper;
     @Resource
     private LogtableMapper logtableMapper;
-
+    @Resource
+    private CommentMapper commentMapper;
+    @Resource
+    private MessageControl messageControll;
+    @Resource
+    private FriendMapper friendMapper;
+    @Resource
+    private SixinMapper sixinMapper;
     @RequestMapping(value = "/checkLogin", method = RequestMethod.POST)
     public void checkLogin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, Object> mapwhere = new HashMap<String, Object>(2);
@@ -140,9 +139,23 @@ public class UserController {
                 newUser.setUpassword(upassword);
                 /*插入数据，同步防止数据库出现多条邮箱一样的*/
                 int i = insertUser(newUser);
-
                 if (i == 1) {
+                    Friend sys=new Friend();
+                    sys.setFromuid(-1L);
+                    sys.setTouid(newUser.getUid());
+                    sys.setTime(new Date());
+                    friendMapper.insert(sys);
+                    Sixin sixin=new Sixin();
+                    sixin.setSifromuid(-1L);
+                    sixin.setSitouid(newUser.getUid());
+                    sixin.setContent("<p style='color:grern'>欢迎使用仗剑论坛，有你的世界更精彩!" +
+                            "<br/>  <small> 站长：李胜助</small>" +
+                            "</p>");
+                    sixin.setIsread(0);
+                    sixinMapper.insert(sixin);
+
                     pw.write("success");
+
                 } else {
                     pw.write("busy");   //并发现象 繁忙
                 }
@@ -213,6 +226,12 @@ public class UserController {
             }
         }
         request.setAttribute("tcvos", topicCatalogVoList);
+        boolean isfriend=MessageControl.isFriend(uid,me.getUid(),friendMapper);
+        if(isfriend){
+            request.setAttribute("isfriend","yes");
+        }else {
+            request.setAttribute("isfriend","no");
+        }
         return "hisplace";
     }
 
@@ -337,7 +356,7 @@ public class UserController {
                               HttpServletResponse response,
                               @RequestParam("beginp") String beginp,
                               @RequestParam("endp") String endp,
-                              @RequestParam("yzm") String yzm) throws IOException {
+                              @RequestParam("yzm") String yzm) throws Exception {
         User user = (User) request.getSession().getAttribute("user");
         String password = user.getUpassword();
         PrintWriter pw = null;
@@ -356,6 +375,10 @@ public class UserController {
             } else {
                 user.setUpassword(endp);
                 userMapper.updateById(user);
+                //记录
+                String ip=new IpUtil().getIp(request);
+                Logtable logtable=new Logtable(user.getUid(),ip,3);
+                logtableMapper.insert(logtable);
                 request.getSession().removeAttribute("user");
                 pw = response.getWriter();
                 pw.write("success");
@@ -395,7 +418,7 @@ public class UserController {
                                @RequestParam("yzm") String yzm,
                                @RequestParam("newpassword") String newpassword,
                                HttpServletRequest request,
-                               HttpServletResponse response) throws IOException {
+                               HttpServletResponse response) throws Exception {
         String sendyzm = (String) request.getSession().getServletContext().getAttribute(email);
         if (sendyzm != null && sendyzm.length() > 0) {
             if (sendyzm.equals(yzm)) {
@@ -406,6 +429,10 @@ public class UserController {
                 int i = userMapper.updateById(user);
                 if (i == 1) {
                     request.getSession().getServletContext().removeAttribute(email);
+                    //记录
+                    String ip=new IpUtil().getIp(request);
+                    Logtable logtable=new Logtable(user.getUid(),ip,4);
+                    logtableMapper.insert(logtable);
                     PrintWriter pw = response.getWriter();
                     pw.write("success");
                     pw.close();
@@ -462,11 +489,16 @@ public class UserController {
 
     //删除帖子
     @RequestMapping("/deleteMytopic")
-    public void deleteMyTopic(@RequestParam("tid") long tid, HttpServletResponse response) {
+    public void deleteMyTopic(@RequestParam("tid") long tid, HttpServletResponse response,HttpServletRequest request) throws Exception {
         int i = topicMapper.deleteById(tid);
         try {
             PrintWriter pw = response.getWriter();
             if (i == 1) {
+                //记录
+                String ip=new IpUtil().getIp(request);
+                User user= (User) request.getSession(false).getAttribute("user");
+                Logtable logtable=new Logtable(user.getUid(),ip,6);
+                logtableMapper.insert(logtable);
                 pw.write("ok");
             } else {
                 pw.write("err");
@@ -502,5 +534,58 @@ public class UserController {
         session.invalidate();
         return "redirect:login.html";
     }
+    /**我的评论 **/
+    @RequestMapping("/tomycomment")
+    public String toManComments(){
+        return "mycomment";
+    }
+    @RequestMapping("/listmycomment")
+    @ResponseBody
+    public List<CommentVo> listMyComments(HttpServletRequest request){
+        User me= (User) request.getSession(false).getAttribute("user");
+        Map mapwhere=new HashMap(1);
+        mapwhere.put("cuid",me.getUid());
+        List<Comment> comments=commentMapper.selectByMap(mapwhere);
+        List<CommentVo> commentVos=new ArrayList<>(comments.size());
+        System.out.println(comments.size());
+        for (Comment comment:comments) {
+            CommentVo commentVo=CommentController.comment2Vo(comment,userMapper,topicMapper);
+            commentVos.add(commentVo);
+        }
+        return commentVos;
+    }
+    @RequestMapping("/deletemycomment")
+    public  void deleteComment(@RequestParam("cid")long cid,HttpServletResponse response,HttpServletRequest request) throws Exception {
+        int i=commentMapper.deleteById(cid);
+        PrintWriter pw=response.getWriter();
+        User user= (User) request.getSession(false).getAttribute("user");
+        if(i==1){
+            //记录
+            Logtable logtable=new Logtable(user.getUid(),new IpUtil().getIp(request),8);
+            logtableMapper.insert(logtable);
+            pw.write("success");
+        }else {
+            pw.write("err");
+        }
+        pw.close();
+    }
+    @RequestMapping("/deletemycommentbatch")
+    public void deleteCommentBatch(@RequestParam("cids")long[] cids,HttpServletResponse response,HttpServletRequest request) throws Exception {
+        List cidlist=Arrays.asList(cids);
+        int i=commentMapper.deleteBatchIds(cidlist);
+        PrintWriter pw=response.getWriter();
+        User user= (User) request.getSession(false).getAttribute("user");
+        if (i != cidlist.size()) {
+            //记录
+            Logtable logtable=new Logtable(user.getUid(),new IpUtil().getIp(request),8);
+            logtableMapper.insert(logtable);
+            pw.write("err");}
+        else {
+            pw.write("success");
+        }
+        pw.close();
+    }
+
+
 
 }

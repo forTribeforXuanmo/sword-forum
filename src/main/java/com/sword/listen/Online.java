@@ -14,6 +14,7 @@ public class Online {
         count++;
     }
     public static void delete(){
+        if(count>0)
         count--;
     }
 }

@@ -9,9 +9,18 @@ public class CommentVo {
     private Long   uid;                 //用户id
     private String headimg;              //头像
     private String nickname;             //昵称
+    private String fromuemail;             //发言人账号
+
+
+
     private String content;                //评论内容
     private Long cid;                   //评论id
     private String timeinterval;         //评论间隔时间
+    private Long tid;                 //评论所在帖子
+    private String ttopic;             //评论帖子标题
+
+
+
     private Long rootid;                //所属的根评论id
     private Long parentuid;             //根评论下的间接评论：对根评论下直接评论的人评论用户id
     private String parentunickname;     //根评论下的间接评论：对根评论下直接评论的人评论用户id对应的昵称
@@ -71,12 +80,34 @@ public class CommentVo {
         this.rootid = rootid;
     }
 
+    public String getFromuemail() {
+        return fromuemail;
+    }
+
+    public void setFromuemail(String fromuemail) {
+        this.fromuemail = fromuemail;
+    }
     public Long getParentuid() {
         return parentuid;
     }
 
     public void setParentuid(Long parentuid) {
         this.parentuid = parentuid;
+    }
+    public Long getTid() {
+        return tid;
+    }
+
+    public void setTid(Long tid) {
+        this.tid = tid;
+    }
+
+    public String getTtopic() {
+        return ttopic;
+    }
+
+    public void setTtopic(String ttopic) {
+        this.ttopic = ttopic;
     }
 
     public Long getCzan() {

@@ -65,7 +65,7 @@
                                         </a>
                                         <a class="pull-right" onclick="deleteTopic(${item.tid});">删除</a>
                                         <div class="small m-b-xs">
-                                            <a href="profile.html#" class="pull-left">
+                                            <a  class="pull-left">
                                                 <img alt="image" class="img-circle" style="width: 38px;height: 38px;" src="/img/${item.headimg}">
                                             </a>
 

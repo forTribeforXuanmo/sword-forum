@@ -5480,19 +5480,25 @@ dd.project-people {
 .message-avatar {
     height: 48px;
     width: 48px;
-    border: 1px solid #e7eaec;
-    border-radius: 4px;
     margin-top: 1px;
 }
 
-.chat-discussion .chat-message:nth-child(2n+1) .message-avatar {
+.chat-discussion .chat-message .hismessage-avatar {
+    height: 48px;
+    width: 48px;
+    margin-top: 1px;
     float: left;
     margin-right: 10px;
+    border-radius: 50%;
 }
 
-.chat-discussion .chat-message:nth-child(2n) .message-avatar {
+.chat-discussion .chat-message .mymessage-avatar {
+    height: 48px;
+    width: 48px;
+    margin-top: 1px;
     float: right;
     margin-left: 10px;
+    border-radius: 50%;
 }
 
 .message {
@@ -5505,20 +5511,38 @@ dd.project-people {
     border-radius: 4px;
 }
 
-.chat-discussion .chat-message:nth-child(2n+1) .message-date {
+.chat-discussion .chat-message .hismessage-date {
+    font-size: 10px;
+    color: #888888;
     float: right;
 }
 
-.chat-discussion .chat-message:nth-child(2n) .message-date {
+.chat-discussion .chat-message .mymessage-date {
+    font-size: 10px;
+    color: #888888;
     float: left;
 }
 
-.chat-discussion .chat-message:nth-child(2n+1) .message {
+.chat-discussion .chat-message .hismessage {
+    background-color: #FFDE29;
+    border: 1px solid #e7eaec;
+    text-align: left;
+    display: block;
+    padding: 10px 20px;
+    position: relative;
+    border-radius: 4px;
     text-align: left;
     margin-left: 55px;
 }
 
-.chat-discussion .chat-message:nth-child(2n) .message {
+.chat-discussion .chat-message .mymessage {
+    background-color: #FFDE29;
+    border: 1px solid #e7eaec;
+    text-align: left;
+    display: block;
+    padding: 10px 20px;
+    position: relative;
+    border-radius: 4px;
     text-align: right;
     margin-right: 55px;
 }

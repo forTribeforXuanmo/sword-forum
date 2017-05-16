@@ -89,12 +89,18 @@
                         <div class="user-button">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    <button type="button" class="btn btn-primary btn-sm btn-block"><i class="fa fa-envelope"></i> 发送消息</button>
+                                    <c:if test="${isfriend=='yes'}">
+                                    <button type="button" onclick="sendAt(${his.uid});"   class="btn btn-primary btn-sm btn-block" id="send"><i class="fa fa-envelope"></i> 发送消息</button>
+                                    </c:if>
+                                    <c:if test="${isfriend=='no'}">
+                                    <button type="button"  class="btn btn-primary btn-sm btn-block" id="addfriend"><i class="fa fa-plus"></i> 添加好友</button>
+
+                                    </c:if>
                                 </div>
                                 <input type="hidden" value="${his.uid}" id="hisuid"/>
                                 <div class="col-sm-6">
                                     <c:if test="${flag==0}">
-                                    <button type="button" id="addConBtn" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> +关注</button>
+                                    <button type="button" id="addConBtn"  class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i>关  注</button>
                                     </c:if>
                                     <c:if test="${flag==1}">
                                         <button type="button" id="cancelConBtn" class="btn btn-default btn-sm btn-block"><i class="fa fa-coffee"></i> 取消关注</button>
@@ -166,6 +172,7 @@
 <script src="/js/plugins/peity/jquery.peity.min.js"></script>
 <!-- Peity -->
 <script src="/js/demo/peity-demo.js"></script>
+<script src="/js/plugins/layer/layer.min.js"></script>
 <script type="text/javascript">
 
     /*这里做了两组id对应两组事件方法，但仅仅修改id是不行的因为修改后根据id选择器获取的元素并没有改变，所以它对应的事件方法并没有改变，因此需要在每个绑定事件种写判断，
@@ -191,7 +198,7 @@
                 url:"/cancelConcern",
                 success:function (data) {
                     if(data=='ok'){
-                        $('#cancelConBtn').html('<i class="fa fa-coffee"></i> +关注');
+                        $('#cancelConBtn').html('<i class="fa fa-coffee"></i> 关注');
                         $('#cancelConBtn').attr("id","addConBtn");
 
                     }
@@ -212,7 +219,64 @@
                 cancelCon();
             }
         });
+    function sizeSet() {
+        var size=['240px','420px'];
+        var userAgentInfo = navigator.userAgent;
+        var Agents = ["Android", "iPhone",
+            "SymbianOS", "Windows Phone",
+            "iPad", "iPod"];
+        var flag =1;   //1为pc 2为安卓 3为ipad
+        for (var v = 0; v < Agents.length; v++) {
+            if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                if(Agents[v]=='iPad'||Agents[v]=='iPod'){
+                    flag=3;
+                }else {
+                    flag=2;
+                }
+                alert(Agents[v]);
+                break;
+            }
+        }
 
+        if(flag==1){
+            size=['900px','500px'];
+        }else if(flag==2){
+            size=['240px','420px'];
+        }else {
+            size=['420px','600px'];
+        }
+        return size;
+    }
+    function sendAt(hisuid) {
+        location.href='/tosixin#'+hisuid;
+    }
+//    $('#send').on('click',function () {
+//        var size=sizeSet();
+//            layer.open({
+//                type:2,
+//                shade:0.8,
+//                title:'私信',
+//                area:size,
+//                content:'/tosixin',
+//                success: function(layero, index) {
+//                    layer.iframeAuto(index);
+//                }
+//            })
+//
+//        });
+    $('#addfriend').on('click',function () {
+        $.ajax({
+            url:'/askforaddfriend?hisuid=${his.uid}',
+            type:'get',
+            success:function (data) {
+                if(data=='success'){
+                    layer.msg("已发送添加好友请求");
+                }else {
+                    layer.msg("出现未知错误");
+                }
+            }
+        })
+    })
 </script>
 
 

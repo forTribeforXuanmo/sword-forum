@@ -2,20 +2,15 @@ package com.sword.control;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.sword.mapper.CommentMapper;
-import com.sword.mapper.SectionMapper;
-import com.sword.mapper.TopicMapper;
-import com.sword.mapper.UserMapper;
-import com.sword.model.Comment;
-import com.sword.model.Section;
-import com.sword.model.Topic;
-import com.sword.model.User;
+import com.sword.mapper.*;
+import com.sword.model.*;
 import com.sword.model.VO.CommentVo;
 import com.sword.model.VO.CommentVoS;
 import com.sword.model.VO.TopicCatalogVo;
 import com.sword.model.VO.UnreadComm;
 import com.sword.util.DateUtil;
 import com.sword.util.HtmlUtil;
+import com.sword.util.IpUtil;
 import com.sword.util.toVoUtil;
 import com.sword.websocket.SystemWebSocketHandler;
 import org.springframework.context.annotation.Bean;
@@ -50,6 +45,8 @@ public class CommentController {
     TopicMapper topicMapper;
     @Resource
     SectionMapper sectionMapper;
+    @Resource
+    LogtableMapper logtableMapper;
     /*展示对应的帖子内容，帖子和评论*/
     @RequestMapping(value="/showTopicDetail/{tid}")
      public String showComment(@PathVariable("tid") long tid, Map<String,Object>map,HttpServletRequest request){
@@ -117,10 +114,11 @@ public class CommentController {
         cvo.setParentuid(comment.getParentuid());
         cvo.setCzan(comment.getCzan());
         cvo.setUid(comment.getCuid());   //自己的uid
-        //自己的昵称,头像
+        //自己的昵称,头像，账号
         User me=userMapper.selectById(comment.getCuid());
         cvo.setHeadimg(me.getHeadimg());
         cvo.setNickname(me.getUnickname());
+        cvo.setFromuemail(me.getUemail());
         //parent的昵称
         Long parentuid=comment.getParentuid();
         if(parentuid!=0){
@@ -128,8 +126,36 @@ public class CommentController {
             cvo.setParentunickname(parent.getUnickname());
         }
         return cvo;
-
     }
+    public static CommentVo comment2Vo(Comment comment,UserMapper userMapper,TopicMapper topicMapper){
+
+            CommentVo cvo=new CommentVo();
+            cvo.setCid(comment.getCid());
+            cvo.setContent(comment.getContent());
+            cvo.setTimeinterval(DateUtil.date(comment.getCtime(),1));
+            cvo.setRootid(comment.getRootcid());
+            cvo.setParentuid(comment.getParentuid());
+            cvo.setCzan(comment.getCzan());
+            cvo.setUid(comment.getCuid());   //自己的uid
+            //自己的昵称,头像,账号
+            User me=userMapper.selectById(comment.getCuid());
+            cvo.setHeadimg(me.getHeadimg());
+            cvo.setNickname(me.getUnickname());
+            cvo.setFromuemail(me.getUemail());
+            //parent的昵称
+            Long parentuid=comment.getParentuid();
+            if(parentuid!=0){
+                User parent=userMapper.selectById(parentuid);
+                cvo.setParentunickname(parent.getUnickname());
+            }
+            //帖子信息，id和标题
+            cvo.setTid(comment.getCtid());
+            Topic t=topicMapper.selectById(comment.getCtid());
+            cvo.setTtopic(t.getTtopic());
+            return  cvo;
+    }
+
+
     @Bean
     public SystemWebSocketHandler systemWebSocketHandler() {
         return new SystemWebSocketHandler();
@@ -140,7 +166,7 @@ public class CommentController {
     public void addComment(@RequestParam("content")String content, @RequestParam("tid")long tid,
                            @RequestParam(value = "rootcid",required = false,defaultValue ="0")long rootcid,
                            @RequestParam(value = "parentuid",required = false,defaultValue = "0")long parentuid,
-                           HttpServletRequest request, HttpServletResponse response){
+                           HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user= (User) request.getSession().getAttribute("user");
         Long uid=user.getUid();
         Comment comment=new Comment();
@@ -150,6 +176,9 @@ public class CommentController {
         comment.setRootcid(rootcid);
         comment.setParentuid(parentuid);
         int i=commentMapper.insertSelective(comment);
+        //操作记录
+        Logtable logtable=new Logtable(user.getUid(),new IpUtil().getIp(request),7);
+        logtableMapper.insert(logtable);
         PrintWriter pw=null;
         if(i==1){
             System.out.println("增加评论成功");
@@ -174,16 +203,7 @@ public class CommentController {
 
         }
     }
-    /**查看我的未读评论**/
-    @RequestMapping("/unReadComment")
-    public String unReadComment(HttpServletRequest request,@RequestParam("page")int current,Map<String,Object>map){
-        User me= (User) request.getSession().getAttribute("user");
-        Page page=new Page(current,8);
-        List<UnreadComm> unreadComms=commentMapper.unreadComment(page,me.getUid());
-        map.put("unreadcomms",unreadComms);
-        map.put("pages",page.getPages());
-        return "unreadcomment";
-    }
+
 
 
 }

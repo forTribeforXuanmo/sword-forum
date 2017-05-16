@@ -3,7 +3,6 @@ package com.sword.websocket;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.socket.WebSocketHandler;
@@ -23,9 +22,14 @@ public class WebSocketConfig extends WebMvcConfigurerAdapter implements WebSocke
        registry.addHandler(systemWebSocketHandler(),"/msgCountSocket").addInterceptors(new WebSocketHandshakeInterceptor());
        registry.addHandler(systemWebSocketHandler(),"/sockjs/msgCountSocket").addInterceptors(
                new WebSocketHandshakeInterceptor()).withSockJS();
+       registry.addHandler(sixinHandler(),"/chatouser").addInterceptors(new WebSocketHandshakeInterceptor());
+       registry.addHandler(sixinHandler(),"/sockjs/chattouser").
+               addInterceptors(new WebSocketHandshakeInterceptor()).withSockJS();
     }
     @Bean
     public WebSocketHandler systemWebSocketHandler(){
         return  new SystemWebSocketHandler();
     }
+    @Bean
+    public SixinHandler sixinHandler(){return  new SixinHandler();}
 }

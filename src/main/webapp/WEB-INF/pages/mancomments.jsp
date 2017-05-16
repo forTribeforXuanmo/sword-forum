@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>我关注的人</title>
+    <title>评论管理</title>
     <link rel="shortcut icon" href="/img/favicon.ico"> <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/font-awesome.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
@@ -23,42 +23,48 @@
     <!-- Latest compiled and minified Locales -->
     <script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
     <script src="/js/plugins/layer/layer.min.js"></script>
+
+    <style type="text/css">
+        td{
+            font-family: Arial;
+            font-size: 14px;
+            font-weight: normal;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-    <h1>我关注的人</h1>
+<div class="wrapper ">
+    <h1 class="font-bold text-center">评论管理</h1>
     <div id="toolbar">
         <button id="remove" class="btn btn-danger" disabled>
             <i class="glyphicon glyphicon-remove"></i>删除
         </button>
     </div>
     <table id="table"
-            data-toolbar="#toolbar"
-            data-search="true"
+           data-toolbar="#toolbar"
+           data-search="true"
            data-query-params="queryParams"
            data-show-refresh="true"
            data-show-toggle="true"
            data-show-columns="true"
            dat-show-export="true"
-           data-detail-view="true"
-           data-detail-formatter="detailFormatter"
            data-minimum-count-columns="2"
            data-show-pagination-switch="true"
            data-pagination="true"
-           data-id-field="conid"
-           data-page-list="[3, 10, 50, 100, ALL]"
+           data-id-field="cid"
+           data-page-list="[5, 10, 50, 100, ALL]"
            data-show-footer="false"
-           data-side-pagination="server"
+           data-side-pagination="client"
            data-query-params-type="undefined", <%--注意如果用自定义的非limit格式去需要写上去--%>
-           data-url="/iConcern"
+           data-url="/manlistcomments"
            data-response-handler="responseHandler">
-        </table>
+    </table>
 </div>
 <script type="text/javascript">
     var $table=$('#table'),
-    $remove=$('#remove'),
+        $remove=$('#remove'),
         selections=[];
-    function initTable() {
+    function initTable(){
         $table.bootstrapTable({
             height: getHeight(),
             columns: [{
@@ -67,50 +73,66 @@
                 align: 'center',
                 valign: 'middle'
             },{
-                title: '关注id',
-                field: 'conid',
+                title: '评论id',
+                field: 'cid',
                 align: 'center',
                 valign: 'middle',
             },{
-                title: '头像',
-                field: 'headimg',
-                align: 'center',
-                valign: 'middle',
-                formatter: headimgFormatter
-            }, {
-                title: '账号',
-                field: 'uemail',
-                align: 'center',
-                valign: 'middle',
+                title:'内容',
+                field:'content',
 
-            }, {
-                title: '昵称',
-                field: 'unickname',
-                align: 'center',
-                valign: 'middle'
-            }, {
-                title: '性别',
-                field: 'usex',
-                align: 'center',
-                valign: 'middle',
-                formatter: sexFormatter
-            }, {
-                title:'个性签名',
-                field:'ustatement',
+            },{
+                title:'时间',
+                field:'timeinterval',
+                align:'center',
+                valign:'middle',
+            },{
+                title:'发言人id',
+                field:'uid',
                 align:'center',
                 valign:'middle'
             },{
-                title: '等级',
-                field: 'ulevel',
-                align: 'center',
-                valign: 'middle',
-            }, {
-                title: '操作',
-                field: 'operate',
-                align: 'center',
-                events: operateEvents,
-                formatter: operateFormatter
-            }]
+                title:'发言人账号',
+                field:'fromuemail',
+                align:'center',
+                valign:'middle'
+            },
+                {
+                    title:'昵称',
+                    field:'nickname',
+                    align:'center',
+                    valign:'middle',
+
+                }, {
+                    title: '头像',
+                    field: 'headimg',
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: headimgFormatter
+                }, {
+                    title: '帖子id',
+                    field: 'tid',
+                    align: 'center',
+                    valign: 'middle',
+
+                }, {
+                    title: '标题',
+                    field: 'ttopic',
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    title:'上级评论id',
+                    field:'rootid',
+                    align:'center',
+                    valign:'middle'
+                }, {
+                    title: '操作',
+                    field: 'operate',
+                    align: 'center',
+                    events: operateEvents,
+                    formatter: operateFormatter
+                }]
         });
         setTimeout(function () {
             $table.bootstrapTable('resetView');
@@ -121,19 +143,17 @@
             //保存选择的
             selections = getIdSelections();
         });
-//        $table.onCheck('all.bs.table',function (e,name,args) {
-//            console.log(name,args);
-//        });
+
         $remove.click(function () {
             var ids=getIdSelections();
             $.ajax({
-                url:'/deleteConcernBatch',
+                url:'/mdeletecommentbatch',
                 type:'post',
-                data:{conids:ids},
+                data:{cids:ids},
                 success:function (data) {
                     if(data=='ok'){
                         $table.bootstrapTable('remove',{
-                            field:'conid',
+                            field:'cid',
                             values:ids
                         });
                         $remove.prop('disabled',true);
@@ -154,12 +174,12 @@
 
     function getIdSelections() {
         return $.map($table.bootstrapTable('getSelections'),function (row) {
-            return row.conid;
+            return row.cid;
         });
     }
     function responseHandler(res) {
-        $.each(res.rows,function (i,row) {
-            row.state=$.inArray(row.conid,selections)!=-1
+        $.each(res,function (i,row) {
+            row.state=$.inArray(row.cid,selections)!=-1
         });
         return res;
     }
@@ -171,51 +191,49 @@
         };
         return temp;
     }
-    function detailFormatter(index,row) {
-          var html=[];
-          $.each(row,function (key,value) {
-              html.push('<p><b>' + key + ':</b> ' + value + '</p>');
-          });
-          return html.join('');
-    }
     function headimgFormatter(value,row,index) {
         return '<img  class="img-circle" style="width: 32px;height: 32px;" src="/img/'+value+'"/>';
     }
-    function sexFormatter(value) {
-        return value==0?'男':'女';
+
+    function stausFormatter(value,row,inde) {
+        return value==0?'否':'<font class="text-danger">是</font>'
     }
     function operateFormatter(value,row,index) {
         return [
-            '<a class="look" href="javascript:void(0)" title="Look">',
+            '<a class="look" href="javascript:void(0)" title="查看">',
             '<i class="glyphicon glyphicon-eye-open"></i>',
-            '</a>  ',
-            '<a class="remove" href="javascript:void(0)" title="Remove">',
+            '</a> ',
+            '<a class="remove" href="javascript:void(0)" title="删除">',
             '<i class="glyphicon glyphicon-remove"></i>',
-            '</a>'
+            '</a> '
         ].join('');
     }
     window.operateEvents={
         'click .look': function (e, value, row, index) {
-            location.href="/showUser/"+row.uid;
+            location.href="/showTopicDetail/"+row.tid+"#"+row.cid;
         },
         'click .remove': function (e, value, row, index) {
             $.ajax({
                 type:'post',
-                url:"/deleteConcern",
-                data:{conid:row.conid},
+                url:"/mdeletecomment",
+                data:{tid:row.tid},
                 success:function (data) {
-                    if(data=='ok'){
-                        layer.msg("删除成功")
+                    if(data=='success'){
+                        layer.msg("删除成功");
                         $table.bootstrapTable('remove', {
-                            field: 'conid',
-                            values: [row.conid]
+                            field: 'tid',
+                            values: [row.tid]
                         });
                         $table.bootstrapTable('refresh');
+                    }else {
+                        layer.msg("删除失败");
                     }
                 }
             })
         }
+
     }
+
     function getHeight() {
         return $(window).height()-$('h1').outerHeight(true);
     }

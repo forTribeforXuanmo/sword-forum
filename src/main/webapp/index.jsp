@@ -147,18 +147,20 @@
                     </ul>
                 </li>
                 <!--版块类别结束-->
-
+            <c:if test="${sessionScope.user!=null}">
                 <li class="line dk"></li>
                 <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
                     <span class="ng-scope">分类</span>
                 </li>
                 <li>
-                    <a ><i class="fa fa-envelope"></i> <span class="nav-label">帖子 </span><span class="label label-warning pull-right"></span></a>
+                    <a ><i class="fa fa-envelope"></i> <span class="nav-label">帖子 </span><span class="label label-warning pull-right"></span>
+                    <span class="fa arrow"></span>
+                    </a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="/mytopic?page=1&&condition=">我的帖子</a>
                         </li>
-                        <li><a class="J_menuItem" >我的好友</a>
-                        </li>
+                        <li ><a class="J_menuItem" href="/tomycomment">我的评论</a></li>
+
                         <li><a class="J_menuItem" href="form_editors.html">发&nbsp;&nbsp;帖</a>
                         </li>
                     </ul>
@@ -172,6 +174,11 @@
 
                     </ul>
                 </li>
+                <%--私信--%>
+                <li>
+                    <a class="J_menuItem " href="/tosixin" ><i class="fa fa-edit"></i> <span class="nav-label">私信聊天</span></a>
+                </li>
+            </c:if>
             </ul>
         </div>
     </nav>
@@ -212,13 +219,21 @@
                                 </li>
                                 <li class="divider"></li>
                                 <li>
-                                    <a>
+                                    <a href="/tosixin" class="J_menuItem">
                                         <div>
-                                            <i class="fa fa-qq fa-fw"></i> 3条私信（待实现）
-                                            <span class="pull-right text-muted small">12分钟钱</span>
+                                            <i class="fa fa-qq fa-fw"></i>您有 <font id="unreadsixin">0</font>条私信消息
                                         </div>
                                     </a>
                                 </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/unhandleraddfriend?page=1" class="J_menuItem">
+                                        <div>
+                                            <i class="fa fa-flag "></i>您有 <font id="unreadadvise">0</font>条通知
+                                        </div>
+                                    </a>
+                                </li>
+
                                 <li class="divider"></li>
                                 <li>
                                     <div class="text-center link-block" >
@@ -279,23 +294,56 @@
 
     };
     websocket.onmessage = function (evnt) {
-        $("#msgcount").html("(<font color='red'>"+evnt.data+"</font>)");
-        var count=evnt.data;
-        if(count!=null&&count!='0'){
+        var data=JSON.parse(evnt.data);
+        var allcount=data.allcount;
+        var commentcount=data.commentcount;
+        var sixincount=data.sixincount;
+        var advisecount=data.advisecount;//目前只有申请添加好友的请求通知
+
+        if(data!=null){
+            var timer=null;
+            if(allcount!=0){
+                $('#allunread').html(allcount);
+
+                var i=0;
+                clearInterval(timer);
+                document.getElementById("all").onclick=function () {
+                    clearInterval(timer);
+                }
+                timer=setInterval(function () {
+                    document.getElementById("all").style.visibility=(i++)%2?"hidden":"visible";
+                    i>100&&(clearInterval(timer))
+                },500);
+            }else {
+                clearInterval(timer);
+                $('#allunread').html("");
+            }
+
+            /**未读评论**/
+            if(commentcount!=0){
             $('#unreadComment').attr("color","red");
-            $('#unreadComment').html(count);
-           var allcountdiv= $('#allunread');
-           allcountdiv.html(count);
-           var timer=null;
-           var i=0;
-           clearInterval(timer);
-           document.getElementById("all").onclick=function () {
-               clearInterval(timer);
-           }
-           timer=setInterval(function () {
-               document.getElementById("all").style.visibility=(i++)%2?"hidden":"visible";
-               i>100&&(clearInterval(timer))
-           },500);
+            $('#unreadComment').html(commentcount);
+            }else {
+                $('#unreadComment').attr("color","");
+                $('#unreadComment').html(commentcount);
+            }
+            /**未读私信**/
+            if(sixincount!=0){
+            $('#unreadsixin').attr("color","red");
+            $('#unreadsixin').html(sixincount);
+            }else{
+                $('#unreadsixin').attr("color","");
+                $('#unreadsixin').html(sixincount);
+            }
+            /**通知**/
+            if(advisecount!=0){
+                $('#unreadadvise').attr('color','red');
+                $('#unreadadvise').html(advisecount);
+            }else {
+                $('#unreadadvise').attr('color','');
+                $('#unreadadvise').html(advisecount);
+            }
+
         }
     };
     websocket.onerror = function (evnt) {

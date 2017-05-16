@@ -122,11 +122,11 @@
 
 
                         <!--根评论开始-->
-                        <div class="social-comment" rootcid="${single.rootcomment.cid}" id="${single.rootcomment.cid}">
+                        <div class="social-comment" rootcid="${single.rootcomment.cid}" >
                             <a href="/showUser/${single.rootcomment.uid}" class="pull-left" >
                                 <img alt="image" src="/img/${single.rootcomment.headimg}">
                             </a>
-                            <div class="media-body">
+                            <div class="media-body" id="${single.rootcomment.cid}">
                                 <a href="/showUser/${single.rootcomment.uid}">
                                         ${single.rootcomment.nickname}
                                 </a>
@@ -141,11 +141,11 @@
                             <!-- 根评论的直接评论开始-->
                             <c:if test="${single.root_directcomment !=null && fn:length(single.root_directcomment)!=0}">
                                 <c:forEach items="${single.root_directcomment}" var="dire" >
-                                    <div    class="social-comment"  id="${dire.cid}" >
+                                    <div    class="social-comment"   >
                                         <a href="/showUser/${dire.uid}" class="pull-left">
                                             <img alt="image" src="/img/${dire.headimg}">
                                         </a>
-                                        <div class="media-body" directuid="${dire.uid}">
+                                        <div cid="" class="media-body" directuid="${dire.uid}" id="${dire.cid}">
                                             <a href="/showUser/${dire.uid}">
                                                 ${dire.nickname}
                                             </a>
@@ -161,11 +161,11 @@
                                         <c:forEach items="${single.root_Ndirectcomment}" var="ndire">
                                             <c:if test="${ndire.parentuid eq dire.uid}">
 
-                                                <div class="social-comment" id="${ndire.cid}">
+                                                <div class="social-comment" >
                                                     <a href="/showUser/${ndire.uid}" class="pull-left">
                                                         <img alt="image" src="/img/${ndire.headimg}">
                                                     </a>
-                                                    <div class="media-body" directuid="${ndire.uid}">
+                                                    <div class="media-body" directuid="${ndire.uid}" id="${ndire.cid}">
                                                         <a href="/showUser/${ndire.uid}">
                                                                 ${ndire.nickname}
                                                         </a>
@@ -357,7 +357,15 @@
     function cancle(obj) {
         $(obj).parent().parent().remove();
     }
-
+    /**获取#后面的cid并用颜色展示**/
+    function lookTheComment() {
+        var href=window.location.href;
+        var a=href.split("#");
+        if(a[1]!=null){
+           $('#'+a[1]).css({background:'#E0E0E0'});
+        }
+    }
+    lookTheComment();
 </script>
 
 

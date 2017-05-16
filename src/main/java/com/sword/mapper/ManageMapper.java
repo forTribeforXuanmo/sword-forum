@@ -3,6 +3,8 @@ package com.sword.mapper;
 import com.sword.model.Manage;
 import com.baomidou.mybatisplus.mapper.AutoMapper;
 import com.sword.model.VO.ChartVo;
+import com.sword.model.VO.ManTopic;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +23,6 @@ public interface ManageMapper extends AutoMapper<Manage> {
     //用户注册量
     List<ChartVo> getRegisterChartByWeek(String year);
     List<ChartVo> getRegisterChartByMonth(String year);
+    //查询帖子详细信息
+    List<ManTopic>selectDetailTopic(@Param("sid") int sid);
 }

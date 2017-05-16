@@ -68,7 +68,7 @@ public class ShowController {
         if(current==0||current==null){
             current=1;
         }
-            if(current<=1&&topics1.size()!=0){
+            if(topics1.size()!=0){
                 Topic t1=topics1.get(0);
                 User user=userMapper.selectById(t1.getTuid());
                 TopicCatalogVo  tcvo1=toVoUtil.toTopciVO(t1,user);

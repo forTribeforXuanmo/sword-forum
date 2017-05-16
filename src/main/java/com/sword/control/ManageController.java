@@ -3,22 +3,21 @@ package com.sword.control;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.sun.istack.internal.Nullable;
 import com.sun.mail.imap.Utility;
-import com.sword.mapper.ManageMapper;
-import com.sword.mapper.SectionMapper;
-import com.sword.mapper.TopicMapper;
-import com.sword.mapper.UserMapper;
-import com.sword.model.Manage;
-import com.sword.model.Section;
-import com.sword.model.User;
+import com.sword.mapper.*;
+import com.sword.model.*;
 import com.sword.model.VO.ChartVo;
+import com.sword.model.VO.CommentVo;
+import com.sword.model.VO.ManTopic;
 import com.sword.util.DateUtil;
 import com.sword.util.LevelUtil;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,7 +41,8 @@ public class ManageController {
     private SectionMapper sectionMapper;
     @Resource
     private TopicMapper topicMapper;
-
+    @Resource
+    private CommentMapper commentMapper;
     /**
      * 登录到后台
      **/
@@ -54,7 +54,7 @@ public class ManageController {
         @Nullable
         Manage me = manageMapper.selectOne(manage);
         if (me == null) {
-            return "redirect:../login2.html?logininfo=err";
+            return "redirect:/login2.html?logininfo=err";
         } else {
             request.getSession().setAttribute("admin", me);
             return "manage";
@@ -124,9 +124,7 @@ public class ManageController {
     @ResponseBody
     public List<User> manListUsers() {
         ArrayList<User> userList = (ArrayList<User>) userMapper.selectList(new EntityWrapper<User>(new User()));
-        for (User user : userList) {
-            System.out.println(user.getUnickname() + " " + user.getUpassword());
-        }
+
         return userList.size() == 0 ? null : userList;
     }
 
@@ -304,5 +302,127 @@ public class ManageController {
                 }
             }
         }
+    }
+    /** 帖子管理**/
+    @RequestMapping("/mtomantopics")
+    public String toManTopics(@RequestParam(value = "sid",required = false)Integer sid, Map<String,Object>map){
+        if(null!=sid&&sid!=-1){
+            Section section=sectionMapper.selectById(sid);
+            if(null!=section){
+                System.out.println("section不等于空");
+                map.put("sid",sid);
+            }else {
+                map.put("sid",-1);
+            }
+        }else {
+            map.put("sid",-1);
+        }
+        return "mantopics";
+    }
+    @RequestMapping("/manlisttopics")
+    @ResponseBody
+    public List<ManTopic> manListTopics(@RequestParam("sid")int sid,HttpServletResponse response){
+        System.out.println("sid"+sid);
+       List<ManTopic> manTopics=manageMapper.selectDetailTopic(sid);  //sid=0全部查询
+        return manTopics;
+    }
+    @RequestMapping("/mdeletetopic")
+    public void deleteTopic(@RequestParam("tid")long tid, HttpServletResponse response) throws IOException {
+        int i=topicMapper.deleteById(tid);
+        PrintWriter pw=response.getWriter();
+        if(i==1){
+            pw.write("success");
+        }else {
+            pw.write("err");
+        }
+        pw.close();
+    }
+    @RequestMapping("/mdeletetopicbatch")
+    public void deleteTopicBatch(@RequestParam("tids[]")long[]tids, HttpServletResponse response) throws IOException {
+        List tidList=Arrays.asList(tids);
+        int i=topicMapper.deleteBatchIds(tidList);
+        PrintWriter pw=response.getWriter();
+        if(i==tidList.size()){
+                pw.write("success");
+        }else {
+            pw.write("err");
+        }
+        pw.close();
+    }
+    @RequestMapping("/mtotop")
+    public void toTop(@RequestParam("tid")long tid,@RequestParam("sid")int sid, HttpServletResponse response) throws IOException {
+        Topic topicWhere=new Topic();
+        topicWhere.setTsid(sid);
+        topicWhere.setTstaus(1);
+        Topic oldTopTopic=topicMapper.selectOne(topicWhere);
+        if(oldTopTopic!=null&&oldTopTopic.getTid()!=tid){
+            oldTopTopic.setTstaus(0);
+            topicMapper.updateById(oldTopTopic);
+        }
+        Topic newTopic=new Topic();
+        newTopic.setTid(tid);
+        newTopic.setTstaus(1);
+        int i=topicMapper.updateSelectiveById(newTopic);
+        PrintWriter pw=response.getWriter();
+        if(i==1){
+            pw.write("success");
+        }else {
+            pw.write("err");
+        }
+        pw.close();
+    }
+    @RequestMapping("/mcancletotop")
+    public void cancleToTop(@RequestParam("tid")long tid,HttpServletResponse response) throws IOException {
+        Topic t=new Topic();
+        t.setTid(tid);
+        t.setTstaus(0);
+        int i=topicMapper.updateSelectiveById(t);
+        PrintWriter pw=response.getWriter();
+        if(i==1){
+            pw.write("success");
+        }else {
+            pw.write("err");
+        }
+        pw.close();
+    }
+    /**评论管理 **/
+    @RequestMapping("/mtomancomments")
+    public String toManComments(){
+        return "mancomments";
+    }
+    @RequestMapping("/manlistcomments")
+    @ResponseBody
+    public List<CommentVo> manListComments(){
+        ArrayList<Comment> comments=(ArrayList<Comment>)commentMapper.selectList(new EntityWrapper<>(null));
+        List<CommentVo> commentVos=new ArrayList<>(comments.size());
+        System.out.println(comments.size());
+        for (Comment comment:comments) {
+            CommentVo commentVo=CommentController.comment2Vo(comment,userMapper,topicMapper);
+            commentVos.add(commentVo);
+        }
+        return commentVos;
+    }
+    @RequestMapping("/mdeletecomment")
+    public  void deleteComment(@RequestParam("cid")long cid,HttpServletResponse response) throws IOException {
+        int i=commentMapper.deleteById(cid);
+        PrintWriter pw=response.getWriter();
+        if(i==1){
+            pw.write("success");
+        }else {
+            pw.write("err");
+        }
+        pw.close();
+    }
+    @RequestMapping("/mdeletecommentbatch")
+    public void deleteCommentBatch(@RequestParam("cids")long[] cids,HttpServletResponse response) throws IOException {
+        List cidlist=Arrays.asList(cids);
+        int i=commentMapper.deleteBatchIds(cidlist);
+        PrintWriter pw=response.getWriter();
+        if (!(cidlist.size() == i)) {
+            pw.write("err");
+        } else {
+            pw.write("success");
+        }
+        pw.close();
     }
 }

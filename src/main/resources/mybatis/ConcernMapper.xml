@@ -7,32 +7,25 @@
 		conid, confromuid, contouid
 	</sql>
 	<select id="iConcernSearch" resultMap="convo">
-	SELECT
-  conid,
-  uid,
-  headimg,
-  uemail,
-  unickname,
-  usex,
-  ustatement,
-  ulevel
-FROM
-  USER,
-  concern
-WHERE uid IN
-  (SELECT
-    contouid
-  FROM
-    concern
-  WHERE confromuid = #{meuid})
-  <if test="search!=null and search!=''">
-  AND (
-    uid LIKE #{search}
-    OR uemail LIKE #{search}
-    OR unickname LIKE #{search}
-	  )
-  </if>
-  AND uid = contouid
+        SELECT
+        conid,
+        uid,
+        headimg,
+        uemail,
+        unickname,
+        usex,
+        ustatement,
+        ulevel
+        FROM
+        user LEFT JOIN concern ON uid=contouid
+        WHERE confromuid = #{meuid}
+        <if test="search!=null and search!=''">
+            AND (
+            uid LIKE #{search}
+            OR uemail LIKE #{search}
+            OR unickname LIKE #{search}
+            )
+        </if>
 	</select>
 
     <select id="concernTopic" parameterType="long" resultType="com.sword.model.Topic">
@@ -60,14 +53,8 @@ WHERE uid IN
         ustatement,
         ulevel
         FROM
-        USER,
-        concern
-        WHERE uid IN
-        (SELECT
-        confromuid
-        FROM
-        concern
-        WHERE contouid = #{meuid})
+        user LEFT JOIN concern ON uid=confromuid
+        WHERE contouid = #{meuid}
         <if test="search!=null and search!=''">
             AND (
             uid LIKE #{search}
@@ -75,7 +62,7 @@ WHERE uid IN
             OR unickname LIKE #{search}
             )
         </if>
-        AND uid = confromuid
+
 
     </select>
 	<resultMap id="convo" type="com.sword.model.VO.ConVo">

@@ -29,4 +29,36 @@
 		<result property="xstr" column="xstr"></result>
 		<result property="ynum" column="ynum"></result>
 	</resultMap>
+	<select id="selectDetailTopic" resultMap="mantopic" parameterType="int">
+		SELECT
+  		tid,tsid,tuid,ttopic,ttime,treplaycount,tclickcount,tlastclicktime,tstaus,tzan,sname,uemail,unickname,headimg
+		FROM
+  		topic ,
+  		section ,
+  		USER
+		WHERE
+		<if test="sid !=-1">
+		  tsid=#{sid} And
+		</if>
+		tsid = sid
+  		AND tuid = uid
+
+	</select>
+
+	<resultMap id="mantopic" type="com.sword.model.VO.ManTopic">
+		<id property="tid" column="tid"/>
+		<result property="tsid" column="tsid"/>
+		<result property="tuid" column="tuid"/>
+		<result property="ttopic" column="ttopic"/>
+		<result property="ttime" column="ttime"/>
+		<result property="treplaycount" column="treplaycount"/>
+		<result property="tclickcount" column="tclickcount"/>
+		<result property="tlastclicktime" column="tlastclicktime"/>
+		<result property="tstaus" column="tstaus"/>
+		<result property="tzan" column="tzan"/>
+		<result property="sname" column="sname"/>
+		<result property="uemail" column="uemail"/>
+		<result property="unickname" column="unickname"/>
+		<result property="headimg" column="headimg"/>
+	</resultMap>
 </mapper>
