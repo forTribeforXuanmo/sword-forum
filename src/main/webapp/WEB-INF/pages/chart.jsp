@@ -141,35 +141,6 @@
 
     </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>中国地图</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="graph_flot.html#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="graph_flot.html#">选项1</a>
-                            </li>
-                            <li><a href="graph_flot.html#">选项2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <div style="height:600px" id="echarts-map-chart"></div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 <!-- 全局js -->
 <script src="/js/jquery.min.js?v=2.1.4"></script>

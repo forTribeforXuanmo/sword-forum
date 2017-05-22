@@ -38,6 +38,11 @@
 <body>
 <div class="wrapper">
     <h2 class="text-center font-bold">板块管理</h2>
+    <div id="toolbar">
+        <button id="add" class="btn btn-primary" >
+            <i class="glyphicon glyphicon-plus"></i>增加板块
+        </button>
+    </div>
     <table id="table"
            data-search="true"
            data-query-params="queryParams"
@@ -58,7 +63,7 @@
 <script type="text/javascript">
     var $table = $('#table'),
         $add = $('#add'),
-        selections = []
+        selections = [];
     function initTable() {
         $table.bootstrapTable({
             height: getHeight(),
@@ -87,7 +92,12 @@
                     title: '版主id',
                     field: 'smasterid',
                     align: 'center',
-                    valign: 'center'
+                    valign: 'middle'
+                },{
+                    title:'父级菜单',
+                    field:'sparentname',
+                    align:'center',
+                    valign:'middle'
                 }, {
                     title: '操作',
                     field: 'operate',
@@ -168,7 +178,20 @@
         return $(window).height() - $('h1').outerHeight(true);
     }
     initTable();
+    $add.on('click',function () {
+        var size=sizeSet();
+        layer.open({
+            type:2,
+            shade:0.8,
+            title:'增加板块',
+            area:size,
+            content:'/mtoaddsection',
+            success: function(layero, index) {
+                layer.iframeAuto(index);
+            }
+        })
 
+    })
 </script>
 
 

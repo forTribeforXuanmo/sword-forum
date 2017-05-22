@@ -132,14 +132,14 @@
         websocket = new SockJS("http://localhost:8080/sockjs/chattouser");
     }
     websocket.onopen = function (evnt) {
-        alert("链接上了");
+
     };
     websocket.onmessage = function (evnt) {
         var data=JSON.parse(evnt.data);
         var unreadlist=data.unreadsixinlist;
         var somecount=data.someonecount;
         var message=data.message;
-        alert(message);
+
         if(unreadlist!=null&&  unreadlist.length!=0) {
             for (var i = 0; i < unreadlist.length; i++) {
                 var element = unreadlist[i];

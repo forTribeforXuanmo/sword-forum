@@ -10,6 +10,6 @@
 		select count(*) from logtable where DATEDIFF(#{date},time)=0 and uid=#{uid} and type=1
 	</select>
 	<select id="todayTopicCount" resultType="int">
-		select count(*) from logtable where DATEDIFF(#{date},time)=0 and uid=#{uid} and type=4
+		select count(*) from logtable where DATEDIFF(#{date},time)=0 and uid=#{uid} and type=5
 	</select>
 </mapper>

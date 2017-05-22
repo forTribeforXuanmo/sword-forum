@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface SectionMapper extends AutoMapper<Section> {
      List<Section> selectAll();
+     List<String> getParentName();
 }

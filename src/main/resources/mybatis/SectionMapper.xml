@@ -9,5 +9,8 @@
 	<select id="selectAll" resultType="com.sword.model.Section">
 		SELECT <include refid="Base_Column_List"/> from section;
 	</select>
+	<select id="getParentName" resultType="java.lang.String">
+		SELECT DISTINCT sparentname FROM section;
+	</select>
 
 </mapper>

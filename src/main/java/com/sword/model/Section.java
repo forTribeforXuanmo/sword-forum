@@ -38,6 +38,17 @@ public class Section implements Serializable {
 	/*******简要说明*/
 	private String sshortsm;
 
+	/**父级菜单 没有则为'0' **/
+	private String sparentname;
+
+	public String getSparentname() {
+		return sparentname;
+	}
+
+	public void setSparentname(String sparentname) {
+		this.sparentname = sparentname;
+	}
+
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}

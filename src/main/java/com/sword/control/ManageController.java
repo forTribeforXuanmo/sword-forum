@@ -60,7 +60,12 @@ public class ManageController {
             return "manage";
         }
     }
-
+    @RequestMapping("/mleave")
+    public String mleave(HttpServletRequest request){
+        HttpSession session=request.getSession(false);
+        session.invalidate();
+        return "login2.html";
+    }
     /**
      * 图表显示
      **/
@@ -280,6 +285,7 @@ public class ManageController {
     @RequestMapping("meditupdatesection")
     public void mEditUpdateSection(@RequestParam("sid")int sid,@RequestParam("sname")String sname,
                                    @RequestParam("sstatement")String sstatement,@RequestParam("sshortsm")String sshortsm,
+                                   @RequestParam("sparentname")String sparentname,
                                    @RequestParam("smasterid")long smasterid,HttpServletResponse response) throws IOException {
         Section section=sectionMapper.selectById(sid);
         PrintWriter pw=response.getWriter();
@@ -297,12 +303,43 @@ public class ManageController {
                     section.setSstatement(sstatement);
                     section.setSshortsm(sshortsm);
                     section.setSmasterid(smasterid);
+                    section.setSparentname(sparentname);
                     sectionMapper.updateSelectiveById(section);
                     pw.write("success");
                 }
             }
         }
     }
+    @RequestMapping("/mtoaddsection")
+    public String  mToAddSection(){
+        return "addsection";
+    }
+    @RequestMapping("/maddsection")
+    public void addSection(@RequestParam("sname")String sname,
+                           @RequestParam("sstatement")String sstatement,
+                           @RequestParam("sshortsm")String sshortsm,
+                           @RequestParam("sparentname")String sparentname,
+                           @RequestParam("smasterid")long smasterid,HttpServletResponse response) throws IOException {
+        PrintWriter pw=response.getWriter();
+        if(sname.trim()==""||sstatement.trim()==""||sshortsm.trim()==""){
+            pw.write("hasnull");
+        }else{
+            User user=userMapper.selectById(smasterid);
+            if(user==null){
+                pw.write("smsternotexist");
+            }else {
+                Section section=new Section();
+                section.setSname(sname);
+                section.setSstatement(sstatement);
+                section.setSshortsm(sshortsm);
+                section.setSmasterid(smasterid);
+                section.setSparentname(sparentname);
+                sectionMapper.insertSelective(section);
+                pw.write("success");
+            }
+        }
+    }
+
     /** 帖子管理**/
     @RequestMapping("/mtomantopics")
     public String toManTopics(@RequestParam(value = "sid",required = false)Integer sid, Map<String,Object>map){

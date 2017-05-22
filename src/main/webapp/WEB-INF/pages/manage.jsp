@@ -109,7 +109,7 @@
                     <!--头像-->
                     <c:if test="${sessionScope.admin!=null}">
                         <li >
-                            <a href="/man/leave"><i class="glyphicon glyphicon-log-out"></i>注销 待</a>
+                            <a href="/mleave"><i class="glyphicon glyphicon-log-out"></i>注销 </a>
                         </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle J_menuItem count-info" data-toggle="dropdown" >
@@ -121,7 +121,6 @@
                                 <i class="fa fa-bell" id="bell"></i> <span class="label label-primary"  id="allunread"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-alerts">
-
                                 <li class="divider"></li>
                                 <li>
                                     <a>
