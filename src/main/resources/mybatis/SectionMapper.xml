@@ -4,13 +4,18 @@
 
 	<!-- 通用查询结果列-->
 	<sql id="Base_Column_List">
-		sid, sname, smasterid, sstatement, sclickcount, stopiccount,sshortsm
+		sid, sname, smasterid, sstatement, sclickcount, stopiccount,sshortsm,sparentname
 	</sql>
 	<select id="selectAll" resultType="com.sword.model.Section">
-		SELECT <include refid="Base_Column_List"/> from section;
+		SELECT * from section;
 	</select>
 	<select id="getParentName" resultType="java.lang.String">
 		SELECT DISTINCT sparentname FROM section;
 	</select>
-
+	<select id="selectAllTopicSum" resultType="java.lang.Long">
+		SELECT SUM(stopiccount) FROM section;
+	</select>
+	<select id="selectMaxClickSid" resultType="java.lang.Long">
+		SELECT sid  FROM section WHERE sclickcount=(SELECT MAX(sclickcount)FROM section) ;
+	</select>
 </mapper>

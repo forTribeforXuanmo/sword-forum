@@ -54,22 +54,7 @@
 
                             <div class="col-sm-10 col-md-7">
                                 <select class="form-control m-b" id="section">
-                                    <option value="1">课堂问答</option>
-                                    <option value="2">java</option>
-                                    <option value="3">c/c++</option>
-                                    <option value="4">python</option>
-                                    <option value="5" >情感部落</option>
-                                    <option value="6">真情天下</option>
-                                    <option value="7">婆媳关系</option>
-                                    <option value="8">仗剑杂谈</option>
-                                    <option value="9">医疗曝光</option>
-                                    <option value="10">大话教育</option>
-                                    <option value="11">娱乐八卦</option>
-                                    <option value="12">体育沙龙</option>
-                                    <option value="13">星座论坛</option>
-                                    <option value="14">保健养生</option>
-                                    <option value="15">文化漫谈</option>
-                                    <option value="16">手机综艺</option>
+
                                 </select>
                             </div>
                         </div>
@@ -138,6 +123,19 @@
         $('.summernote').summernote({
             lang: 'zh-CN'
         });
+        $.ajax({
+            url:'/getsection',
+            cache: false,
+            dataType: "json",
+            success:function (data) {
+
+                for(var i=0;i<data.length;i++){
+                    $('#section').append(' <option value="' +data[i].sid+
+                        '">' +data[i].sname+
+                        '</option>');
+                }
+            }
+        })
        var sid=getUrlParam("sid");
         if(sid!=null){
             $("select option[value="+sid+"]").attr("selected",true);

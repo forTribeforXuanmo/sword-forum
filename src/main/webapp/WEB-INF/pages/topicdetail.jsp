@@ -50,7 +50,7 @@
             <div class="ibox ">
                 <div class="ibox-content text-left">
                     <div class="m-b-xxs">
-                            <a href="/forum_main.html"  class="loadnav"  >home</a>&nbsp;/
+                            <a href="/WEB-INF/pages/forum_main.jsp" class="loadnav"  >home</a>&nbsp;/
                            <a href="/show/topicCatalog?sid=${sectionid} &&page=1" class="loadnav"> ${sectionname}</a>&nbsp;/
                         <span class="topichead">${topic.tTopic}</span>
                     </div>
@@ -119,8 +119,6 @@
                     <c:if test="${comment!=null && fn:length(comment)!=0}">
                     <div class="social-footer">
                         <c:forEach items="${comment}" var="single">
-
-
                         <!--根评论开始-->
                         <div class="social-comment" rootcid="${single.rootcomment.cid}" >
                             <a href="/showUser/${single.rootcomment.uid}" class="pull-left" >

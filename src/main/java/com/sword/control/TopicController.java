@@ -54,7 +54,6 @@ public class TopicController {
     newTopic.setTcontent(content);
     int i=topicMapper.insertSelective(newTopic);
     PrintWriter pw=null;
-    System.out.println(content);
     try {
          pw=response.getWriter();
     } catch (IOException e) {

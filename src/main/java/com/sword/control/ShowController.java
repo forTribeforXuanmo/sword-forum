@@ -41,6 +41,10 @@ public class ShowController {
     private CateLogMapper catelogMapper;
     @Resource
     private UserMapper userMapper;
+
+
+
+
     @RequestMapping(value = "/catalog" ,method = RequestMethod.POST)
     @ResponseBody
     public Map getCatalog(HttpServletRequest request, HttpServletResponse response){
@@ -52,9 +56,9 @@ public class ShowController {
             int count=catelogMapper.sectionReply(sid);
             replycountList.add(count);
         }
-        map.put("a",sectionList);
+
         map.put("b",replycountList);
-        map.put("onlineCount", Online.getCount());
+
         return map;
     }
     @RequestMapping("/topicCatalog")
@@ -110,6 +114,28 @@ public class ShowController {
             Section section=sectionMapper.selectById(sid);
             section.setSclickcount(section.getSclickcount()+1);
             sectionMapper.updateById(section);
+    }
+    @RequestMapping("/search")
+    public String search(@RequestParam("searchkey")String key,Map map){
+        System.out.println(key);
+        EntityWrapper<User> userEw=new EntityWrapper<>();
+        userEw.where("unickname like '%"+key+"%'").or("uemail like '%"+key+"%'");
+        List<User> userList=userMapper.selectList(userEw);
+        EntityWrapper<Topic> topicEw=new EntityWrapper<>();
+        topicEw.where("ttopic like '%"+key+"%'");
+        List<Topic> topicList=topicMapper.selectList(topicEw);
+        List<TopicCatalogVo> topicCatalogVos=null;
+        if(topicList.size()!=0){
+            topicCatalogVos=new ArrayList<>(topicList.size());
+        }
+        for (Topic t:topicList) {
+            User user=userMapper.selectById(t.getTuid());
+            TopicCatalogVo topicCatalogVo=toVoUtil.toTopciVO(t,user);
+            topicCatalogVos.add(topicCatalogVo);
+        }
+        map.put("userlist",userList);
+        map.put("topiclist",topicCatalogVos);
+        return "search";
     }
 
 }

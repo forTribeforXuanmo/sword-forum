@@ -81,7 +81,12 @@
                                         <a class="J_menuItem" >${sectionvo.sparentname}<span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
                                         <c:forEach items="${sectionvo.sections}" var="section">
-                                            <li><a href="/show/topicCatalog?sid=${section.sid}&&page=1" class="J_menuItem">${section.sname}</a></li>
+                                            <li><a href="/show/topicCatalog?sid=${section.sid}&&page=1" class="J_menuItem">${section.sname}
+                                                <c:if test="${section.sid==maxsid}">
+                                                    <span class="label label-danger pull-right">推荐</span>
+                                                </c:if>
+
+                                            </a></li>
                                         </c:forEach>
                                         </ul>
                                     </li>
@@ -132,9 +137,9 @@
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
-                    <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                    <form role="search"   id="searchform"  class="navbar-form-custom" action="/show/search" >
                         <div class="form-group">
-                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
+                            <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="searchkey" id="searchkey">
                         </div>
                     </form>
                 </div>
@@ -202,7 +207,7 @@
             </nav>
         </div>
         <div class="row J_mainContent" id="content-main" >
-            <iframe id="J_iframe" width="100%" height="100%" src="forum_main.html?v=4.0" frameborder="0" data-id="index_v1.html" seamless></iframe>
+            <iframe id="J_iframe" width="100%" height="100%" src="/tocatalog" frameborder="0"  seamless></iframe>
         </div>
     </div>
     <!--右侧部分结束-->
@@ -217,10 +222,10 @@
 
 <!-- 自定义js -->
 <script src="js/hAdmin.js?v=4.1.0"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<script  src="/js/index.js"></script>
 
 <!-- 第三方插件 -->
-<script src="js/plugins/pace/pace.min.js"></script>
+<script src="/js/plugins/pace/pace.min.js"></script>
 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script>
     var websocket;
@@ -240,9 +245,9 @@
         var commentcount=data.commentcount;
         var sixincount=data.sixincount;
         var advisecount=data.advisecount;//目前只有申请添加好友的请求通知
-
+        var timer=null;
         if(data!=null){
-            var timer=null;
+
             if(allcount!=0){
                 $('#allunread').html(allcount);
 
