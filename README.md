@@ -19,7 +19,7 @@
 - 视图模板Jsp/Jstl
 - 长连接spring-websocket
 - 其他 Jsoup,fastjson等
-- 爬虫crawler4j
+- 爬虫crawler4j  
 **前端**   
 - JQuery js框架
 - Bootstrap 响应式框架
