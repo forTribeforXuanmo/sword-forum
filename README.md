@@ -1,4 +1,4 @@
-# 仗剑论坛Sword `version 1.0`
+# 仗剑论坛Sword `version 2.0`
 ## a java forum
 ### 核心功能
 1. 登录注册
@@ -19,7 +19,8 @@
 - 视图模板Jsp/Jstl
 - 长连接spring-websocket
 - 其他 Jsoup,fastjson等
-- 爬虫crawler4j  
+- 爬虫crawler4j 
+
 **前端**   
 - JQuery js框架
 - Bootstrap 响应式框架
