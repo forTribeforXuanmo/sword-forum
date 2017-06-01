@@ -30,7 +30,7 @@ import java.util.*;
 @Controller
 @RequestMapping("/show")
 public class ShowController {
-    public static final int  PAGESIZE=5;
+    public static final int  PAGESIZE=9;
     @Resource
     private SectionMapper sectionMapper;
     @Resource

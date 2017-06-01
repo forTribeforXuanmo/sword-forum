@@ -32,7 +32,7 @@
     <link href="css/style.css?v=4.1.0" rel="stylesheet">
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<body class="fixed-sidebar full-height-layout gray-bg " style="overflow:hidden">
 <div id="wrapper">
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -221,7 +221,7 @@
 <script src="js/plugins/layer/layer.min.js"></script>
 
 <!-- 自定义js -->
-<script src="js/hAdmin.js?v=4.1.0"></script>
+<script src="/js/hAdmin.js?v=4.1.0"></script>
 <script  src="/js/index.js"></script>
 
 <!-- 第三方插件 -->

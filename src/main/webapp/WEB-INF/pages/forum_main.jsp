@@ -113,18 +113,14 @@
             cache: false,
             dataType: "json",
             success: function (data) {
-
                 $("span[id$='reply_num']").each(function (index, element) {
                     $(element).html(data.b[index]);
                 });
-
                 console.log("欢迎来到仗剑论坛^-^");
             },
             err: function (XMLHttpRequest, textStatus, errThrown) {
                 alert("ajax请求失败");
             }
-
-
         })
     })
 </script>

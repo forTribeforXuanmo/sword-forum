@@ -42,6 +42,9 @@
         <button id="add" class="btn btn-primary" >
             <i class="glyphicon glyphicon-plus"></i>增加板块
         </button>
+        <button id="mcrawlerQQXY" class="btn btn-primary">
+            <i class="glyphicon glyphicon-cloud-download">菁菁校园爬取</i>
+        </button>
     </div>
     <table id="table"
            data-search="true"
@@ -63,6 +66,7 @@
 <script type="text/javascript">
     var $table = $('#table'),
         $add = $('#add'),
+        $mcrawlerQQXY=$('#mcrawlerQQXY'),
         selections = [];
     function initTable() {
         $table.bootstrapTable({
@@ -190,8 +194,18 @@
                 layer.iframeAuto(index);
             }
         })
+    });
+    $mcrawlerQQXY.on('click',function () {
+        alert("进来");
+        $.ajax({
+            url:'/mcrawlerQQXY',
+            type:'post',
+            success:function (data) {
 
+            }
+        })
     })
+
 </script>
 
 

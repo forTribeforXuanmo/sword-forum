@@ -37,6 +37,23 @@ public class Topic implements Serializable {
 	/** 发帖时间 */
 	private Date ttime;
 
+	@Override
+	public String toString() {
+		return "Topic{" +
+				"tid=" + tid +
+				", tsid=" + tsid +
+				", tuid=" + tuid +
+				", ttopic='" + ttopic + '\'' +
+				", tcontent='" + tcontent + '\'' +
+				", ttime=" + ttime +
+				", tclickcount=" + tclickcount +
+				", treplaycount=" + treplaycount +
+				", tlastclicktime=" + tlastclicktime +
+				", tstaus=" + tstaus +
+				", tzan=" + tzan +
+				'}';
+	}
+
 	/** 帖子浏览数 */
 	private Long tclickcount;
 

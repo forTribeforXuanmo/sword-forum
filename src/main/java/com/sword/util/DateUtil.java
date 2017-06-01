@@ -30,9 +30,8 @@ public class DateUtil {
             } else if (interval / 3600000 / 24 < 365) {
                 return interval / 3600000 / 24 + "天";
             } else {
-                return interval / 1000 / 60 / 60 / 60 / 365 + "年";
+                return interval / 3600000/ 24/365 + "年";
             }
-
         }else if(flag==1){
             return toCh_Formate(createDate);
         }

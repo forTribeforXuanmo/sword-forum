@@ -134,14 +134,15 @@
                         '">' +data[i].sname+
                         '</option>');
                 }
+                var sid=getUrlParam("sid");
+                if(sid!=null){
+                    $("select option[value="+sid+"]").attr("selected",true);
+                }else {
+                    $('select option[value="2"]').attr("selected",true);
+                }
             }
         })
-       var sid=getUrlParam("sid");
-        if(sid!=null){
-            $("select option[value="+sid+"]").attr("selected",true);
-        }else {
-            $('select option[value=2]').attr("selected",true);
-        }
+
 
 
     });

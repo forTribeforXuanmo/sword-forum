@@ -3,6 +3,7 @@ package com.sword.control;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.sun.istack.internal.Nullable;
 import com.sun.mail.imap.Utility;
+import com.sword.crawler.nchu.QQCY;
 import com.sword.mapper.*;
 import com.sword.model.*;
 import com.sword.model.VO.ChartVo;
@@ -10,6 +11,11 @@ import com.sword.model.VO.CommentVo;
 import com.sword.model.VO.ManTopic;
 import com.sword.util.DateUtil;
 import com.sword.util.LevelUtil;
+import edu.uci.ics.crawler4j.crawler.CrawlConfig;
+import edu.uci.ics.crawler4j.crawler.CrawlController;
+import edu.uci.ics.crawler4j.fetcher.PageFetcher;
+import edu.uci.ics.crawler4j.robotstxt.RobotstxtConfig;
+import edu.uci.ics.crawler4j.robotstxt.RobotstxtServer;
 import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -461,5 +467,21 @@ public class ManageController {
             pw.write("success");
         }
         pw.close();
+    }
+    @RequestMapping("/mcrawlerQQXY")
+    public void mCrawlerQQXY() throws Exception {
+        String crawlStorageFolder="/data/nchu/yaowen";
+        int numberOfCrawlers=5;
+        CrawlConfig config=new CrawlConfig();
+        config.setCrawlStorageFolder(crawlStorageFolder);
+        //实例化Control
+        PageFetcher pageFetcher=new PageFetcher(config);
+        RobotstxtConfig robotstxtConfig=new RobotstxtConfig();
+        RobotstxtServer robotstxtServer=new RobotstxtServer(robotstxtConfig,pageFetcher);
+        CrawlController controller=new CrawlController(config,pageFetcher,robotstxtServer);
+
+        controller.addSeed("http://news.nchu.edu.cn/");
+        controller.startNonBlocking(QQCY.class,numberOfCrawlers);
+
     }
 }

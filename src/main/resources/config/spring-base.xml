@@ -25,6 +25,15 @@
         <property name="minIdle" value="${jdbc.minIdle}"></property>
         <!-- 获取连接最大等待时间 -->
         <property name="maxWait" value="${jdbc.maxWait}"></property>
+        <!--心跳检测重连-->
+        <property name= "testWhileIdle" ><value> true </value></property>
+        <property name= "testOnBorrow" ><value> false </value></property>
+        <property name= "testOnReturn" ><value> false </value></property>
+        <property name= "validationQuery" ><value>select SYSDATE() from dual</value></property>
+        <property name= "validationQueryTimeout" ><value>1</value></property>
+        <property name= "timeBetweenEvictionRunsMillis" ><value>30000</value></property>
+        <property name= "numTestsPerEvictionRun" ><value>16</value></property>
+
     </bean>
     <!--Mybatis SqlSessionFactoryBean配置-->
     <bean id="sqlSessionFactory" class="com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean">
