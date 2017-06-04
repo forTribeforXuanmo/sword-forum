@@ -87,6 +87,7 @@ public class CommentController {
             List<CommentVo> root_Ndirectcomment=new ArrayList<CommentVo>();
             for (Comment c3:root_Ndirect) {
                 CommentVo oneNdirect=comment2Vo(c3,userMapper);
+                System.err.println(oneNdirect.getCid()+" "+oneNdirect.getContent()+" "+oneNdirect.getParentcid());
                 root_Ndirectcomment.add(oneNdirect);
             }
             //完整的一个CommentVoS
@@ -111,6 +112,7 @@ public class CommentController {
         cvo.setContent(comment.getContent());
         cvo.setTimeinterval(DateUtil.date(comment.getCtime(),0));
         cvo.setRootid(comment.getRootcid());
+        cvo.setParentcid(comment.getParentcid());
         cvo.setParentuid(comment.getParentuid());
         cvo.setCzan(comment.getCzan());
         cvo.setUid(comment.getCuid());   //自己的uid
@@ -137,6 +139,7 @@ public class CommentController {
             cvo.setParentuid(comment.getParentuid());
             cvo.setCzan(comment.getCzan());
             cvo.setUid(comment.getCuid());   //自己的uid
+            cvo.setParentcid(comment.getParentcid());
             //自己的昵称,头像,账号
             User me=userMapper.selectById(comment.getCuid());
             cvo.setHeadimg(me.getHeadimg());
@@ -166,6 +169,7 @@ public class CommentController {
     public void addComment(@RequestParam("content")String content, @RequestParam("tid")long tid,
                            @RequestParam(value = "rootcid",required = false,defaultValue ="0")long rootcid,
                            @RequestParam(value = "parentuid",required = false,defaultValue = "0")long parentuid,
+                           @RequestParam(value = "parentcid" ,required = false,defaultValue = "0")long parentcid,
                            HttpServletRequest request, HttpServletResponse response) throws Exception {
         User user= (User) request.getSession().getAttribute("user");
         Long uid=user.getUid();
@@ -175,6 +179,7 @@ public class CommentController {
         comment.setCuid(uid);
         comment.setRootcid(rootcid);
         comment.setParentuid(parentuid);
+        comment.setParentcid(parentcid);
         int i=commentMapper.insertSelective(comment);
         //操作记录
         Logtable logtable=new Logtable(user.getUid(),new IpUtil().getIp(request),7);

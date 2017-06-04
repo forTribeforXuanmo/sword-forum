@@ -194,14 +194,14 @@
         'click .remove': function (e, value, row, index) {
             $.ajax({
                 type: 'post',
-                url: "/mdeletetopic",
-                data: {tid: row.tid},
+                url: "/deletemycomment",
+                data: {cid: row.cid},
                 success: function (data) {
                     if (data == 'success') {
                         layer.msg("删除成功");
                         $table.bootstrapTable('remove', {
-                            field: 'tid',
-                            values: [row.tid]
+                            field: 'cid',
+                            values: [row.cid]
                         });
                         $table.bootstrapTable('refresh');
                     } else {

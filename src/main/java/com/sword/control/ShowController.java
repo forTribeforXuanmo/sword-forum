@@ -69,16 +69,17 @@ public class ShowController {
         mapwhere1.put("tstaus",1);
         List<Topic> topics1=topicMapper.selectByMap(mapwhere1); //查询出在sid版块下的被置顶的帖子
         int size=PAGESIZE;
-        if(current==0||current==null){
-            current=1;
-        }
-            if(topics1.size()!=0){
-                Topic t1=topics1.get(0);
-                User user=userMapper.selectById(t1.getTuid());
-                TopicCatalogVo  tcvo1=toVoUtil.toTopciVO(t1,user);
+        //如果是第一页则把置顶的放入集合，然后分页查询未置顶的size-1
+        if(current==0||current==1||current==null) {
+            current = 1;
+            if (topics1.size() != 0) {
+                Topic t1 = topics1.get(0);
+                User user = userMapper.selectById(t1.getTuid());
+                TopicCatalogVo tcvo1 = toVoUtil.toTopciVO(t1, user);
                 topicCatalogVos.add(tcvo1);
-                size=size-1;
+                size = size - 1;
             }
+        }
         List<Topic> topics2=catelogMapper.sectionTopic(new Page<Topic>(current,size),sid);//查询出sid板块下的未被置顶的帖子 时间降序
         Topic countTopic=new Topic();
         countTopic.setTsid(sid);

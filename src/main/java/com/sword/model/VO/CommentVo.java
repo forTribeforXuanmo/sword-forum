@@ -23,8 +23,18 @@ public class CommentVo {
 
     private Long rootid;                //所属的根评论id
     private Long parentuid;             //根评论下的间接评论：对根评论下直接评论的人评论用户id
+    private Long parentcid;             //间接评论上直接评论的id
     private String parentunickname;     //根评论下的间接评论：对根评论下直接评论的人评论用户id对应的昵称
     private Long czan;                  //点赞数
+
+    public Long getParentcid() {
+        return parentcid;
+    }
+
+    public void setParentcid(Long parentcid) {
+        this.parentcid = parentcid;
+    }
+
     public Long getUid() {
         return uid;
     }

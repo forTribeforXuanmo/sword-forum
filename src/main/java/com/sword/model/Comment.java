@@ -46,6 +46,17 @@ public class Comment implements Serializable {
 	/**是否已读 默认0未读，1已读**/
 	private int isread;
 
+	/**间接评论上的直接评论id**/
+	private Long parentcid;
+
+	public Long getParentcid() {
+		return parentcid;
+	}
+
+	public void setParentcid(Long parentcid) {
+		this.parentcid = parentcid;
+	}
+
 	public int getIsread() {
 		return isread;
 	}

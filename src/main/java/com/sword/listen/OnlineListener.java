@@ -17,7 +17,12 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class OnlineListener implements HttpSessionListener {
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-
+//        HttpSession session=httpSessionEvent.getSession();
+//        if(session.getAttribute("user")!=null){
+//            Online.add();
+//            System.out.println("用户+1");
+//        }
+//        System.out.println("session创建");
     }
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
         HttpSession session=httpSessionEvent.getSession();

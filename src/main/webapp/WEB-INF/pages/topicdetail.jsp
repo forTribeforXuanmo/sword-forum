@@ -150,15 +150,14 @@
                                             ${dire.content}
                                             <br/>
                                             <a  class="small"><i class="fa fa-thumbs-up"></i> ${dire.czan}</a> &nbsp;
-                                            <a  class="small" onclick="addNdirectTextArea(this);" ><i class="fa fa-comments"></i></a>&nbsp;
+                                            <a  class="small" onclick="addNdirectTextArea(this,${dire.cid});" ><i class="fa fa-comments"></i></a>&nbsp;
                                             <small class="text-muted">${dire.timeinterval}前</small>
                                         </div>
 
                                     </div>
                                     <c:if test="${single.root_Ndirectcomment !=null && fn:length(single.root_Ndirectcomment)!=0}">
                                         <c:forEach items="${single.root_Ndirectcomment}" var="ndire">
-                                            <c:if test="${ndire.parentuid eq dire.uid}">
-
+                                            <c:if test="${ ndire.parentcid eq dire.cid }">
                                                 <div class="social-comment" >
                                                     <a href="/showUser/${ndire.uid}" class="pull-left">
                                                         <img alt="image" src="/img/${ndire.headimg}">
@@ -168,12 +167,12 @@
                                                                 ${ndire.nickname}
                                                         </a>
                                                         &nbsp;<font color="#8b5de4">回复</font>
-                                                        <a href="/showUser/${dire.uid}">${dire.nickname}</a>
+                                                        <a href="/showUser/${ndire.parentuid}">${ndire.parentunickname}</a>
 
                                                         ${ndire.content}
                                                         <br/>
                                                         <a  class="small"><i class="fa fa-thumbs-up"></i> ${ndire.czan}</a>&nbsp;
-                                                        <a  class="small" onclick="addNdirectTextArea(this);"><i class="fa fa-comments"></i></a>&nbsp;
+                                                        <a  class="small" onclick="addNdirectTextArea(this,${dire.cid});"><i class="fa fa-comments"></i></a>&nbsp;
                                                         <small class="text-muted">${ndire.timeinterval}前</small>
                                                     </div>
                                                 </div>
@@ -280,7 +279,7 @@
         }
    }
    /*根评论的非直接评论*/
-   function addNdirectTextArea(obj) {
+   function addNdirectTextArea(obj,direcid) {
        if($('#ndirect').length>0){
            $('#ndirect').remove();
        }
@@ -288,11 +287,12 @@
            $('#direct').remove();
        }
        var parentName=$(obj).parent().children().first('a').text().trim();
-       var html = '<div class="social-comment" id="ndirect"> <a  class="pull-left"> <img alt="image" src="/img/${sessionScope.user.headimg}"/> </a> <div class="media-body"> <textarea class="form-control Ndirectcontent"  placeholder="@'+parentName+'"></textarea> <button type="button" class="btn btn-primary "  style="float: right;margin-top: 1px" onclick="submitNdirect(this)">发表评论</button> ' +
+       var html = '<div class="social-comment" id="ndirect"> <a  class="pull-left"> <img alt="image" src="/img/${sessionScope.user.headimg}"/> </a> <div class="media-body"> <textarea class="form-control Ndirectcontent"  placeholder="@'+parentName+'"></textarea> <button type="button" class="btn btn-primary "  style="float: right;margin-top: 1px" onclick="submitNdirect(this,' +direcid+
+           ')">发表评论</button> ' +
                '<button type="button" class="btn btn-primary " onclick="cancle(this)" style="float: right;margin-top: 1px;margin-right:2px">取消</button></div> </div>';
        $(obj).parent().after(html);
    }
-   function submitNdirect(obj) {
+   function submitNdirect(obj,direcid) {
        var parentuid=$(obj).parent().parent().prev().attr('directuid');
        var rootcid=$(obj).parent().parent().parent().parent().attr('rootcid');
        var content=$(".Ndirectcontent").val().trim();
@@ -303,7 +303,7 @@
        $.ajax({
            url:'/addComment',
            type:'post',
-           data:{content:content,tid:${topic.tid},rootcid:rootcid,parentuid:parentuid},
+           data:{content:content,tid:${topic.tid},rootcid:rootcid,parentuid:parentuid,parentcid:direcid},
            success:function(data){
                if(data=='success'){
                    location.reload();
