@@ -31,3 +31,12 @@
 
 **支持浏览器**
 - chrome/firfox/ie9+
+
+### 预览
+![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E5%8D%B3%E6%97%B6%E8%81%8A%E5%A4%A9.png)
+![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E5%90%8E%E5%8F%B0%E7%99%BB%E5%BD%95.png)
+![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E5%90%8E%E5%8F%B0%E9%A6%96%E9%A1%B5.png)
+![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E6%94%B9%E5%AF%86%E7%A0%81%E9%82%AE%E4%BB%B6%E9%AA%8C%E8%AF%81%E7%A0%81%E9%AA%8C%E8%AF%81.png)
+![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E8%AE%BA%E5%9D%9B%E6%A8%A1%E5%9D%97.png)
+![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E5%B8%96%E5%AD%90%E5%86%85%E5%AE%B9.png)
+![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E6%88%91%E7%9A%84%E8%B5%84%E6%96%99.png)
