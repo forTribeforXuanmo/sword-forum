@@ -1,4 +1,6 @@
 # 仗剑论坛Sword `version 2.0`
+#### 好久没有打开过这项目了，现在把网站展示的图片也放上去了，同学们帮我推广一波，弹尽粮绝。比较尴尬，混了快2个月了没工作了。。
+
 ## a java forum
 ### 核心功能
 1. 登录注册
@@ -31,7 +33,6 @@
 
 **支持浏览器**
 - chrome/firfox/ie9+
-
 ### 预览
 ![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E5%8D%B3%E6%97%B6%E8%81%8A%E5%A4%A9.png)
 ![image](https://github.com/forTribeforXuanmo/sword-forum/blob/master/%E5%90%8E%E5%8F%B0%E7%99%BB%E5%BD%95.png)
